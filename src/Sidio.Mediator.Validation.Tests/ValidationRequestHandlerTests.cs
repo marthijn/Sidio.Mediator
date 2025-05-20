@@ -5,7 +5,6 @@ namespace Sidio.Mediator.Validation.Tests;
 
 public sealed class ValidationRequestHandlerTests
 {
-
     [Fact]
     public async Task HandleAsync_RequestIsNotValid_ReturnsValidationResults()
     {
