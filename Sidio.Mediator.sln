@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{022FBE39-9BB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0ABAFD30-B844-4B84-B425-5140B858133C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidio.Mediator.Tests", "src\Sidio.Mediator.Tests\Sidio.Mediator.Tests.csproj", "{4710364D-24DB-4614-9DC9-0C8A5F0070AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,8 +25,13 @@ Global
 		{804B6971-C106-42E2-95D9-F5207FCA19E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{804B6971-C106-42E2-95D9-F5207FCA19E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{804B6971-C106-42E2-95D9-F5207FCA19E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4710364D-24DB-4614-9DC9-0C8A5F0070AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4710364D-24DB-4614-9DC9-0C8A5F0070AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4710364D-24DB-4614-9DC9-0C8A5F0070AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4710364D-24DB-4614-9DC9-0C8A5F0070AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{804B6971-C106-42E2-95D9-F5207FCA19E1} = {022FBE39-9BB7-44A4-B581-F3442761036D}
+		{4710364D-24DB-4614-9DC9-0C8A5F0070AE} = {0ABAFD30-B844-4B84-B425-5140B858133C}
 	EndGlobalSection
 EndGlobal
