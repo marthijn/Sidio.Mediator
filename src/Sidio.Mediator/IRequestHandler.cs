@@ -13,5 +13,5 @@ public interface IRequestHandler<in TRequest>
     /// <param name="request">The request.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A <see cref="Task"/>.</returns>
-    Task HandleAsync(TRequest request, CancellationToken cancellationToken = default);
+    Task<Result> HandleAsync(TRequest request, CancellationToken cancellationToken = default);
 }
