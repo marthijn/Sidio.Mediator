@@ -1,0 +1,57 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+      branches:
+      - main
+  pull_request:
+    branches:
+      - '*'
+
+env:
+  DOTNET_NOLOGO: true
+
+jobs:
+  build:
+
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet 8.x
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+      - name: Setup dotnet 9.x
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.x
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release
+      - name: Test with dotnet
+        run: dotnet test --configuration Release
+          /p:CollectCoverage=true
+          /p:CoverletOutputFormat="\"cobertura,json\""
+          /p:CoverletOutput=coverage/
+          /p:IncludeTestAssembly=false
+      - name: ReportGenerator
+        uses: danielpalme/ReportGenerator-GitHub-Action@v5
+        with:
+          reports: src/**/coverage/*.cobertura.xml
+          targetdir: coveragereport/
+          reporttypes: "Cobertura"
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coveragereport
+          path: coveragereport/
+      - name: Upload dotnet test results
+        uses: coverallsapp/github-action@v2.3.6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          files: ${{ github.workspace }}/coveragereport/Cobertura.xml
+          format: cobertura
+        if: ${{ always() }}
