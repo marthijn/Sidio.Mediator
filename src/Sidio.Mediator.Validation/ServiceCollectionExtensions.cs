@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Sidio.Mediator.Http;
+using Sidio.Mediator.Validation.Http;
 
 namespace Sidio.Mediator.Validation;
 
@@ -11,6 +13,7 @@ public static class ServiceCollectionExtensions
         services.AddValidatorsFromAssembly(Assembly.GetAssembly(assemblyType));
         services.Decorate(typeof(IRequestHandler<,>), typeof(ValidationRequestHandler<,>));
         services.Decorate(typeof(IRequestHandler<>), typeof(ValidationRequestHandler<>));
+        services.Decorate(typeof(IHttpRequestHandler<,>), typeof(ValidationHttpRequestHandler<,>));
         return services;
     }
 }
