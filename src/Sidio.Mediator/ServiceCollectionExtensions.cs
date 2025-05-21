@@ -5,10 +5,10 @@ namespace Sidio.Mediator;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddMediator(this IServiceCollection services, Type assemblyType)
+    public static IServiceCollection AddMediator(this IServiceCollection services, params Type[] assemblyTypes)
     {
-        ArgumentNullException.ThrowIfNull(assemblyType);
-        services.Scan(s => s.FromAssembliesOf(assemblyType)
+        ArgumentNullException.ThrowIfNull(assemblyTypes);
+        services.Scan(s => s.FromAssembliesOf(assemblyTypes)
             .AddClasses(c => c.AssignableTo(typeof(IRequestHandler<,>)), publicOnly: false)
             .AsImplementedInterfaces()
             .WithScopedLifetime()

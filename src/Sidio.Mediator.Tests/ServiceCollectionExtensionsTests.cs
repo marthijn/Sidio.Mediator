@@ -18,7 +18,7 @@ public sealed class ServiceCollectionExtensionsTests
     }
 
     [Fact]
-    public void AddMediator_WithoutAssemblyMarker_ThrowsArgumentNullExceptionWithCorrectParameterName()
+    public void AddMediator_WithAssemblyMarker_RequestHandlersRegistered()
     {
         // Arrange
         var services = new ServiceCollection();
