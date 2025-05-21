@@ -18,7 +18,7 @@ public sealed class HttpResultTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Response.Should().Be(value);
+        result.Value.Should().Be(value);
         result.HttpStatusCode.Should().Be(HttpStatusCode.OK);
         result.ValidationErrors.Should().BeEmpty();
         result.ErrorCode.Should().BeNull();
@@ -43,7 +43,7 @@ public sealed class HttpResultTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Response.Should().BeNull();
+        result.Value.Should().BeNull();
         result.HttpStatusCode.Should().Be(HttpStatusCode.NoContent);
         result.ValidationErrors.Should().BeEmpty();
         result.ErrorCode.Should().BeNull();
@@ -58,7 +58,7 @@ public sealed class HttpResultTests
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Response.Should().BeNull();
+        result.Value.Should().BeNull();
         result.HttpStatusCode.Should().Be(HttpStatusCode.Unauthorized);
         result.ValidationErrors.Should().BeEmpty();
         result.ErrorCode.Should().BeNull();
@@ -76,7 +76,7 @@ public sealed class HttpResultTests
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Response.Should().BeNull();
+        result.Value.Should().BeNull();
         result.HttpStatusCode.Should().Be(HttpStatusCode.BadRequest);
         result.ValidationErrors.Should().BeEquivalentTo(validationErrors);
         result.ErrorCode.Should().BeNull();
@@ -94,7 +94,7 @@ public sealed class HttpResultTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Response.Should().Be(value);
+        result.Value.Should().Be(value);
         result.HttpStatusCode.Should().Be(HttpStatusCode.OK);
         result.ValidationErrors.Should().BeEmpty();
         result.ErrorCode.Should().BeNull();

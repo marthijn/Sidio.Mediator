@@ -6,23 +6,23 @@ namespace Sidio.Mediator.Http;
 /// <summary>
 /// This class represents the result of an HTTP request.
 /// </summary>
-/// <typeparam name="TResponse"></typeparam>
+/// <typeparam name="TResponse">The response type.</typeparam>
 public sealed class HttpResult<TResponse> : Result<TResponse>
 {
     private HttpResult(
-        TResponse? response,
+        TResponse? value,
         HttpStatusCode httpStatusCode,
         string? errorCode,
         string? errorMessage,
         IEnumerable<ValidationError> validationErrors)
-        : base(response, IsSuccessStatusCode(httpStatusCode), errorCode, errorMessage, validationErrors)
+        : base(value, IsSuccessStatusCode(httpStatusCode), errorCode, errorMessage, validationErrors)
     {
         HttpStatusCode = httpStatusCode;
-        Response = response;
+        Value = value;
     }
 
     /// <inheritdoc />
-    public override TResponse? Response { get; }
+    public override TResponse? Value { get; }
 
     /// <summary>
     /// Gets the HTTP status code.
@@ -32,7 +32,7 @@ public sealed class HttpResult<TResponse> : Result<TResponse>
     /// <summary>
     /// Gets a value indicating whether the HTTP status code is 200 OK.
     /// </summary>
-    [MemberNotNullWhen(true, nameof(Response))]
+    [MemberNotNullWhen(true, nameof(Value))]
     public bool IsHttp200Ok => HttpStatusCode == HttpStatusCode.OK;
 
     public static HttpResult<TResponse> StatusCode(
@@ -42,44 +42,44 @@ public sealed class HttpResult<TResponse> : Result<TResponse>
     public static HttpResult<TResponse> Failure(
         HttpStatusCode httpStatusCode,
         IEnumerable<ValidationError> validationErrors,
-        TResponse? response = default) =>
-        new(response, httpStatusCode, null, null, validationErrors);
+        TResponse? value = default) =>
+        new(value, httpStatusCode, null, null, validationErrors);
 
     public static HttpResult<TResponse> Failure(
         HttpStatusCode httpStatusCode,
         string? errorCode,
         string? errorMessage,
         IEnumerable<ValidationError>? validationErrors = null,
-        TResponse? response = default) =>
-        new(response, httpStatusCode, errorCode, errorMessage, validationErrors ?? []);
+        TResponse? value = default) =>
+        new(value, httpStatusCode, errorCode, errorMessage, validationErrors ?? []);
 
     public static HttpResult<TResponse> Unauthorized(
         string? errorCode = null,
         string? errorMessage = null,
-        TResponse? response = default) =>
-        new(response, HttpStatusCode.Unauthorized, errorCode, errorMessage, []);
+        TResponse? value = default) =>
+        new(value, HttpStatusCode.Unauthorized, errorCode, errorMessage, []);
 
     public static HttpResult<TResponse> BadRequest(
         IEnumerable<ValidationError> validationErrors,
         string? errorCode = null,
         string? errorMessage = null,
-        TResponse? response = default) =>
-        new(response, HttpStatusCode.BadRequest, errorCode, errorMessage, validationErrors);
+        TResponse? value = default) =>
+        new(value, HttpStatusCode.BadRequest, errorCode, errorMessage, validationErrors);
 
     public static HttpResult<TResponse> NoContent(
         HttpStatusCode httpStatusCode = HttpStatusCode.NoContent) =>
         new(default, httpStatusCode, null, null, []);
 
-    public static HttpResult<TResponse> Ok(TResponse response)
+    public static HttpResult<TResponse> Ok(TResponse value)
     {
-        ArgumentNullException.ThrowIfNull(response);
-        return new HttpResult<TResponse>(response, HttpStatusCode.OK, null, null, []);
+        ArgumentNullException.ThrowIfNull(value);
+        return new HttpResult<TResponse>(value, HttpStatusCode.OK, null, null, []);
     }
 
     public static HttpResult<TResponse> Success(
-        TResponse? response,
+        TResponse? value,
         HttpStatusCode httpStatusCode = HttpStatusCode.OK) =>
-        new(response, httpStatusCode, null, null, []);
+        new(value, httpStatusCode, null, null, []);
 
     private static bool IsSuccessStatusCode(HttpStatusCode httpStatusCode) =>
         ((int) httpStatusCode >= 200) && ((int) httpStatusCode <= 299);

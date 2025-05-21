@@ -8,7 +8,7 @@ namespace Sidio.Mediator;
 public class Result<TResponse> : Result
 {
     protected Result(
-        TResponse? response,
+        TResponse? value,
         bool isSuccess,
         string? errorCode,
         string? errorMessage,
@@ -18,17 +18,17 @@ public class Result<TResponse> : Result
         errorMessage,
         validationErrors)
     {
-        Response = response;
+        Value = value;
         IsSuccess = isSuccess;
     }
 
     /// <summary>
-    /// Gets the response.
+    /// Gets the response value.
     /// </summary>
-    public virtual TResponse? Response { get; }
+    public virtual TResponse? Value { get; }
 
     /// <inheritdoc />
-    [MemberNotNullWhen(true, nameof(Response))]
+    [MemberNotNullWhen(true, nameof(Value))]
     public override bool IsSuccess { get; }
 
     public static Result<TResponse> Failure(IEnumerable<ValidationError> validationErrors) =>
@@ -37,9 +37,9 @@ public class Result<TResponse> : Result
     public static Result<TResponse> Failure(string? errorCode, string? errorMessage, IEnumerable<ValidationError>? validationErrors = null) =>
         new(default!, false, errorCode, errorMessage, validationErrors ?? []);
 
-    public static Result<TResponse> Success(TResponse response)
+    public static Result<TResponse> Success(TResponse value)
     {
-        ArgumentNullException.ThrowIfNull(response);
-        return new Result<TResponse>(response, true, null, null, []);
+        ArgumentNullException.ThrowIfNull(value);
+        return new Result<TResponse>(value, true, null, null, []);
     }
 }

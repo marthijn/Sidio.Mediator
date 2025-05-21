@@ -15,7 +15,7 @@ public sealed class ResultTestsGeneric
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Response.Should().Be(value);
+        result.Value.Should().Be(value);
         result.ValidationErrors.Should().BeEmpty();
         result.ErrorCode.Should().BeNull();
         result.ErrorMessage.Should().BeNull();
