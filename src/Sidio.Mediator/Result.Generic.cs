@@ -19,6 +19,7 @@ public class Result<TResponse> : Result
         validationErrors)
     {
         Response = response;
+        IsSuccess = isSuccess;
     }
 
     /// <summary>

@@ -11,9 +11,9 @@ public static class ServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(assemblyTypes);
         services.AddValidatorsFromAssemblies(assemblyTypes.Select(a => a.Assembly));
-        services.Decorate(typeof(IRequestHandler<,>), typeof(ValidationRequestHandler<,>));
-        services.Decorate(typeof(IRequestHandler<>), typeof(ValidationRequestHandler<>));
-        services.Decorate(typeof(IHttpRequestHandler<,>), typeof(ValidationHttpRequestHandler<,>));
+        services.TryDecorate(typeof(IRequestHandler<,>), typeof(ValidationRequestHandler<,>));
+        services.TryDecorate(typeof(IRequestHandler<>), typeof(ValidationRequestHandler<>));
+        services.TryDecorate(typeof(IHttpRequestHandler<,>), typeof(ValidationHttpRequestHandler<,>));
         return services;
     }
 }

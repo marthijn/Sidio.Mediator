@@ -18,6 +18,7 @@ public sealed class HttpResult<TResponse> : Result<TResponse>
         : base(response, IsSuccessStatusCode(httpStatusCode), errorCode, errorMessage, validationErrors)
     {
         HttpStatusCode = httpStatusCode;
+        Response = response;
     }
 
     /// <inheritdoc />
@@ -68,7 +69,7 @@ public sealed class HttpResult<TResponse> : Result<TResponse>
     public static HttpResult<TResponse> Ok(TResponse response)
     {
         ArgumentNullException.ThrowIfNull(response);
-        return Success(response);
+        return new HttpResult<TResponse>(response, HttpStatusCode.OK, null, null, []);
     }
 
     public static HttpResult<TResponse> Success(
