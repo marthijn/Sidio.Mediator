@@ -35,6 +35,10 @@ public sealed class HttpResult<TResponse> : Result<TResponse>
     [MemberNotNullWhen(true, nameof(Response))]
     public bool IsHttp200Ok => HttpStatusCode == HttpStatusCode.OK;
 
+    public static HttpResult<TResponse> StatusCode(
+        HttpStatusCode httpStatusCode) =>
+        new(default, httpStatusCode, null, null, []);
+
     public static HttpResult<TResponse> Failure(
         HttpStatusCode httpStatusCode,
         IEnumerable<ValidationError> validationErrors,

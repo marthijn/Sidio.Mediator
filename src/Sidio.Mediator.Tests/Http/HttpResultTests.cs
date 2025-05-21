@@ -137,4 +137,20 @@ public sealed class HttpResultTests
         result.ErrorCode.Should().Be(errorCode);
         result.ErrorMessage.Should().Be(errorMessage);
     }
+
+    [Fact]
+    public void StatusCode_WithValidationErrors_ReturnsFailureResultWithValidationErrors()
+    {
+        // Arrange
+        var httpStatusCode = _fixture.Create<HttpStatusCode>();
+
+        // Act
+        var result = HttpResult<string>.StatusCode(httpStatusCode);
+
+        // Assert
+        result.HttpStatusCode.Should().Be(httpStatusCode);
+        result.ValidationErrors.Should().BeEmpty();
+        result.ErrorCode.Should().BeNull();
+        result.ErrorMessage.Should().BeNull();
+    }
 }
