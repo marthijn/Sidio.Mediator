@@ -21,6 +21,7 @@
         <PackageReleaseNotes>https://github.com/marthijn/Sidio.Mediator/releases</PackageReleaseNotes>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -34,6 +35,7 @@
     <ItemGroup>
         <None Include="..\..\LICENSE" Pack="true" PackagePath="\"/>
         <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+        <None Include="icon.png" Pack="true" PackagePath=""/>
     </ItemGroup>
 
     <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
