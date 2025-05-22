@@ -1,28 +1,27 @@
 ﻿using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 
 namespace Sidio.Mediator.Validation;
 
-internal sealed class ValidationRequestHandler<TRequest> : IRequestHandler<TRequest>
+internal sealed class ValidationRequestHandler<TRequest> : ValidationRequestHandlerBase<TRequest>, IRequestHandler<TRequest>
     where TRequest : IRequest
 {
     private readonly IRequestHandler<TRequest> _innerHandler;
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
     private readonly ILogger<ValidationRequestHandler<TRequest>> _logger;
 
-    public ValidationRequestHandler(IRequestHandler<TRequest> innerHandler,
+    public ValidationRequestHandler(
+        IRequestHandler<TRequest> innerHandler,
         IEnumerable<IValidator<TRequest>> validators,
         ILogger<ValidationRequestHandler<TRequest>> logger)
+        : base(validators)
     {
         _innerHandler = innerHandler;
-        _validators = validators;
         _logger = logger;
     }
 
     public Task<Result> HandleAsync(TRequest request, CancellationToken cancellationToken = default)
     {
-        if (!_validators.Any())
+        if (Validators.Count == 0)
         {
             if (_logger.IsEnabled(LogLevel.Trace))
             {
@@ -69,20 +68,5 @@ internal sealed class ValidationRequestHandler<TRequest> : IRequestHandler<TRequ
         }
 
         return await _innerHandler.HandleAsync(request, cancellationToken);
-    }
-
-    private async Task<ValidationFailure[]> ValidateRequestAsync(TRequest request, CancellationToken cancellationToken = default)
-    {
-        var context = new ValidationContext<TRequest>(request);
-
-        var validationResults = await Task.WhenAll(
-            _validators.Select(validator => validator.ValidateAsync(context, cancellationToken)));
-
-        var validationFailures = validationResults
-            .Where(validationResult => !validationResult.IsValid)
-            .SelectMany(validationResult => validationResult.Errors)
-            .ToArray();
-
-        return validationFailures;
     }
 }
