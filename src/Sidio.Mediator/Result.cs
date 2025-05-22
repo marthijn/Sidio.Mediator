@@ -3,9 +3,9 @@
 /// <summary>
 /// This class represents the result of a request.
 /// </summary>
-public class Result
+public class Result : IResult
 {
-    protected Result(
+    private Result(
         bool isSuccess,
         string? errorCode,
         string? errorMessage,
@@ -17,24 +17,16 @@ public class Result
         ErrorMessage = errorMessage;
     }
 
-    /// <summary>
-    /// Gets a value indicating whether the result is successful.
-    /// </summary>
+    /// <inheritdoc />
     public virtual bool IsSuccess { get; }
 
-    /// <summary>
-    /// Gets the validation errors.
-    /// </summary>
+    /// <inheritdoc />
     public IReadOnlyCollection<ValidationError> ValidationErrors { get; }
 
-    /// <summary>
-    /// Gets the error code.
-    /// </summary>
+    /// <inheritdoc />
     public string? ErrorCode { get; }
 
-    /// <summary>
-    /// Gets the error message.
-    /// </summary>
+    /// <inheritdoc />
     public string? ErrorMessage { get; }
 
     public static Result Failure(IEnumerable<ValidationError> validationErrors) =>

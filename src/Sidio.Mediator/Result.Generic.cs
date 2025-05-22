@@ -5,31 +5,37 @@ namespace Sidio.Mediator;
 /// <summary>
 /// This class represents the result of a request.
 /// </summary>
-public class Result<TResponse> : Result
+public class Result<TResponse> : IResult<TResponse>
 {
-    protected Result(
+    private Result(
         TResponse? value,
         bool isSuccess,
         string? errorCode,
         string? errorMessage,
-        IEnumerable<ValidationError> validationErrors) : base(
-        isSuccess,
-        errorCode,
-        errorMessage,
-        validationErrors)
+        IEnumerable<ValidationError> validationErrors)
     {
         Value = value;
         IsSuccess = isSuccess;
+        ValidationErrors = validationErrors.ToList().AsReadOnly();
+        ErrorCode = errorCode;
+        ErrorMessage = errorMessage;
     }
 
-    /// <summary>
-    /// Gets the response value.
-    /// </summary>
-    public virtual TResponse? Value { get; }
+    /// <inheritdoc />
+    public TResponse? Value { get; }
 
     /// <inheritdoc />
     [MemberNotNullWhen(true, nameof(Value))]
-    public override bool IsSuccess { get; }
+    public bool IsSuccess { get; }
+
+    /// <inheritdoc />
+    public IReadOnlyCollection<ValidationError> ValidationErrors { get; }
+
+    /// <inheritdoc />
+    public string? ErrorCode { get; }
+
+    /// <inheritdoc />
+    public string? ErrorMessage { get; }
 
     public static Result<TResponse> Failure(IEnumerable<ValidationError> validationErrors) =>
         new(default!, false, null, null, validationErrors);

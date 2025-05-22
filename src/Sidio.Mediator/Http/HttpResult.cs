@@ -7,7 +7,7 @@ namespace Sidio.Mediator.Http;
 /// This class represents the result of an HTTP request.
 /// </summary>
 /// <typeparam name="TResponse">The response type.</typeparam>
-public sealed class HttpResult<TResponse> : Result<TResponse>
+public sealed class HttpResult<TResponse> : IHttpResult<TResponse>
 {
     private HttpResult(
         TResponse? value,
@@ -15,25 +15,36 @@ public sealed class HttpResult<TResponse> : Result<TResponse>
         string? errorCode,
         string? errorMessage,
         IEnumerable<ValidationError> validationErrors)
-        : base(value, IsSuccessStatusCode(httpStatusCode), errorCode, errorMessage, validationErrors)
     {
         HttpStatusCode = httpStatusCode;
         Value = value;
+        IsSuccess = IsSuccessStatusCode(httpStatusCode);
+        ValidationErrors = validationErrors.ToList().AsReadOnly();
+        ErrorCode = errorCode;
+        ErrorMessage = errorMessage;
     }
 
     /// <inheritdoc />
-    public override TResponse? Value { get; }
+    public TResponse? Value { get; }
 
-    /// <summary>
-    /// Gets the HTTP status code.
-    /// </summary>
+    /// <inheritdoc />
     public HttpStatusCode HttpStatusCode { get; }
 
-    /// <summary>
-    /// Gets a value indicating whether the HTTP status code is 200 OK.
-    /// </summary>
+    /// <inheritdoc />
     [MemberNotNullWhen(true, nameof(Value))]
     public bool IsHttp200Ok => HttpStatusCode == HttpStatusCode.OK;
+
+    /// <inheritdoc />
+    public bool IsSuccess { get; }
+
+    /// <inheritdoc />
+    public IReadOnlyCollection<ValidationError> ValidationErrors { get; }
+
+    /// <inheritdoc />
+    public string? ErrorCode { get; }
+
+    /// <inheritdoc />
+    public string? ErrorMessage { get; }
 
     public static HttpResult<TResponse> StatusCode(
         HttpStatusCode httpStatusCode) =>
