@@ -45,6 +45,14 @@ internal sealed class ValidationHttpRequestHandler<TRequest, TResponse> : IHttpR
         var validationFailures = await ValidateRequestAsync(request, cancellationToken);
         if (validationFailures.Length > 0)
         {
+            if (_logger.IsEnabled(LogLevel.Trace))
+            {
+                _logger.LogTrace(
+                    "Validation failed for request type {RequestType}: {ValidationFailures}",
+                    typeof(TRequest).Name,
+                    string.Join(", ", validationFailures.Select(x => x.ErrorMessage)));
+            }
+
             var validationErrors = validationFailures
                 .Select(x => new ValidationError
                 {
@@ -54,6 +62,13 @@ internal sealed class ValidationHttpRequestHandler<TRequest, TResponse> : IHttpR
                 });
 
             return HttpResult<TResponse>.Failure(HttpStatusCode.BadRequest, validationErrors);
+        }
+
+        if (_logger.IsEnabled(LogLevel.Trace))
+        {
+            _logger.LogTrace(
+                "Validation succeeded for request type {RequestType}",
+                typeof(TRequest).Name);
         }
 
         return await _innerHandler.HandleAsync(request, cancellationToken);
