@@ -1,6 +1,11 @@
 ﻿namespace Sidio.Mediator.Http;
 
-public interface IHttpRequestHandler<TRequest, TResponse>
+/// <summary>
+/// This interface is used to mark a generic HTTP request handler.
+/// </summary>
+/// <typeparam name="TRequest"></typeparam>
+/// <typeparam name="TResponse"></typeparam>
+public interface IHttpRequestHandler<in TRequest, TResponse>
     where TRequest : IHttpRequest<TResponse>
 {
     /// <summary>

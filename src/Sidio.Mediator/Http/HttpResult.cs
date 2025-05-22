@@ -46,16 +46,37 @@ public sealed class HttpResult<TResponse> : IHttpResult<TResponse>
     /// <inheritdoc />
     public string? ErrorMessage { get; }
 
+    /// <summary>
+    /// Creates a new instance of <see cref="HttpResult{TResponse}"/> with the specified HTTP status code.
+    /// </summary>
+    /// <param name="httpStatusCode">The HTTP status code.</param>
+    /// <returns>A <see cref="HttpResult{TResponse}"/>.</returns>
     public static HttpResult<TResponse> StatusCode(
         HttpStatusCode httpStatusCode) =>
         new(default, httpStatusCode, null, null, []);
 
+    /// <summary>
+    /// Creates a new instance of <see cref="HttpResult{TResponse}"/> with the specified HTTP status code and validation errors.
+    /// </summary>
+    /// <param name="httpStatusCode">The HTTP status code.</param>
+    /// <param name="validationErrors">The validation errors.</param>
+    /// <param name="value">The response value.</param>
+    /// <returns>A <see cref="HttpResult{TResponse}"/>.</returns>
     public static HttpResult<TResponse> Failure(
         HttpStatusCode httpStatusCode,
         IEnumerable<ValidationError> validationErrors,
         TResponse? value = default) =>
         new(value, httpStatusCode, null, null, validationErrors);
 
+    /// <summary>
+    /// Creates a new instance of <see cref="HttpResult{TResponse}"/> with the specified HTTP status code, error code, and error message.
+    /// </summary>
+    /// <param name="httpStatusCode">The HTTP status code.</param>
+    /// <param name="errorCode">The error code.</param>
+    /// <param name="errorMessage">The error message.</param>
+    /// <param name="validationErrors">The validation errors.</param>
+    /// <param name="value">The response value.</param>
+    /// <returns>A <see cref="HttpResult{TResponse}"/>.</returns>
     public static HttpResult<TResponse> Failure(
         HttpStatusCode httpStatusCode,
         string? errorCode,
@@ -64,12 +85,27 @@ public sealed class HttpResult<TResponse> : IHttpResult<TResponse>
         TResponse? value = default) =>
         new(value, httpStatusCode, errorCode, errorMessage, validationErrors ?? []);
 
+    /// <summary>
+    /// Creates a new instance of <see cref="HttpResult{TResponse}"/> with the Unauthorized status code.
+    /// </summary>
+    /// <param name="errorCode">The error code.</param>
+    /// <param name="errorMessage">The error message.</param>
+    /// <param name="value">The response value.</param>
+    /// <returns>A <see cref="HttpResult{TResponse}"/>.</returns>
     public static HttpResult<TResponse> Unauthorized(
         string? errorCode = null,
         string? errorMessage = null,
         TResponse? value = default) =>
         new(value, HttpStatusCode.Unauthorized, errorCode, errorMessage, []);
 
+    /// <summary>
+    /// Creates a new instance of <see cref="HttpResult{TResponse}"/> with the Bad Request status code.
+    /// </summary>
+    /// <param name="validationErrors">The validation errors.</param>
+    /// <param name="errorCode">The error code.</param>
+    /// <param name="errorMessage"></param>
+    /// <param name="value"></param>
+    /// <returns>A <see cref="HttpResult{TResponse}"/>.</returns>
     public static HttpResult<TResponse> BadRequest(
         IEnumerable<ValidationError> validationErrors,
         string? errorCode = null,
@@ -77,16 +113,32 @@ public sealed class HttpResult<TResponse> : IHttpResult<TResponse>
         TResponse? value = default) =>
         new(value, HttpStatusCode.BadRequest, errorCode, errorMessage, validationErrors);
 
+    /// <summary>
+    /// Creates a new instance of <see cref="HttpResult{TResponse}"/> with the No-Content status code.
+    /// </summary>
+    /// <param name="httpStatusCode">The HTTP status code.</param>
+    /// <returns>A <see cref="HttpResult{TResponse}"/>.</returns>
     public static HttpResult<TResponse> NoContent(
         HttpStatusCode httpStatusCode = HttpStatusCode.NoContent) =>
         new(default, httpStatusCode, null, null, []);
 
+    /// <summary>
+    /// Creates a new instance of <see cref="HttpResult{TResponse}"/> with the OK status code.
+    /// </summary>
+    /// <param name="value">The response value.</param>
+    /// <returns>A <see cref="HttpResult{TResponse}"/>.</returns>
     public static HttpResult<TResponse> Ok(TResponse value)
     {
         ArgumentNullException.ThrowIfNull(value);
         return new HttpResult<TResponse>(value, HttpStatusCode.OK, null, null, []);
     }
 
+    /// <summary>
+    /// Creates a new instance of <see cref="HttpResult{TResponse}"/> with a response value.
+    /// </summary>
+    /// <param name="value">The response value.</param>
+    /// <param name="httpStatusCode">The HTTP status code.</param>
+    /// <returns>A <see cref="HttpResult{TResponse}"/>.</returns>
     public static HttpResult<TResponse> Success(
         TResponse? value,
         HttpStatusCode httpStatusCode = HttpStatusCode.OK) =>
