@@ -13,8 +13,8 @@
         <RepositoryType>git</RepositoryType>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <Description>A simple implemenetation of the mediator pattern in .NET.</Description>
-        <PackageTags>mediator,mediator-pattern,validation</PackageTags>
+        <Description>Validation features for Sidio.Mediator.</Description>
+        <PackageTags>mediator,mediator-pattern,validation,request,requesthandler</PackageTags>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Deterministic>true</Deterministic>
