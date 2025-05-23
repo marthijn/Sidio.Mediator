@@ -5,7 +5,6 @@ namespace Sidio.Mediator.Validation.Tests;
 
 public sealed class ValidationRequestHandlerTestsTyped
 {
-
     [Fact]
     public async Task HandleAsync_RequestIsNotValid_ReturnsValidationResults()
     {
@@ -26,6 +25,31 @@ public sealed class ValidationRequestHandlerTestsTyped
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeFalse();
         result.ValidationErrors.Should().NotBeEmpty();
+    }
+
+    [Fact]
+    public async Task HandleAsync_RequestIsValid_ReturnsResults()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddMediator(typeof(IAssemblyMarker));
+        services.AddMediatorValidation(typeof(IAssemblyMarker));
+
+        var serviceProvider = services.BuildServiceProvider();
+        var request = new TestRequest
+        {
+            Name = "Valid name",
+        };
+        var requestHandler = serviceProvider.GetRequiredService<IRequestHandler<TestRequest, string>>();
+
+        // Act
+        var result = await requestHandler.HandleAsync(request, CancellationToken.None);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.IsSuccess.Should().BeTrue();
+        result.ValidationErrors.Should().BeEmpty();
     }
 
     public sealed class TestRequest : IRequest<string>
