@@ -23,7 +23,7 @@ internal sealed class ValidationHttpRequestHandler<TRequest, TResponse> : Valida
 
     public Task<HttpResult<TResponse>> HandleAsync(TRequest request, CancellationToken cancellationToken = default)
     {
-        if (Validators.Count == 0)
+        if (!HasValidators)
         {
             if (_logger.IsEnabled(LogLevel.Trace))
             {
@@ -41,7 +41,7 @@ internal sealed class ValidationHttpRequestHandler<TRequest, TResponse> : Valida
     private async Task<HttpResult<TResponse>> HandleInternalAsync(TRequest request, CancellationToken cancellationToken = default)
     {
         var validationFailures = await ValidateRequestAsync(request, cancellationToken);
-        if (validationFailures.Length > 0)
+        if (validationFailures.Count > 0)
         {
             if (_logger.IsEnabled(LogLevel.Trace))
             {
@@ -51,14 +51,7 @@ internal sealed class ValidationHttpRequestHandler<TRequest, TResponse> : Valida
                     string.Join(", ", validationFailures.Select(x => x.ErrorMessage)));
             }
 
-            var validationErrors = validationFailures
-                .Select(x => new ValidationError
-                {
-                    ErrorCode = x.ErrorCode,
-                    ErrorMessage = x.ErrorMessage,
-                    PropertyName = x.PropertyName,
-                });
-
+            var validationErrors = Map(validationFailures);
             return HttpResult<TResponse>.Failure(HttpStatusCode.BadRequest, validationErrors);
         }
 

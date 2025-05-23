@@ -1,29 +1,40 @@
-﻿using FluentValidation;
+﻿using System.Collections.ObjectModel;
+using FluentValidation;
 using FluentValidation.Results;
 
 namespace Sidio.Mediator.Validation;
 
 internal abstract class ValidationRequestHandlerBase<TRequest>
 {
+    private readonly ReadOnlyCollection<IValidator<TRequest>> _validators;
+
     protected ValidationRequestHandlerBase(IEnumerable<IValidator<TRequest>> validators)
     {
-        Validators = validators.ToList();
+        _validators = validators.ToList().AsReadOnly();
     }
 
-    protected IReadOnlyCollection<IValidator<TRequest>> Validators { get; }
+    protected bool HasValidators => _validators.Count > 0;
 
-    protected async Task<ValidationFailure[]> ValidateRequestAsync(TRequest request, CancellationToken cancellationToken = default)
+    protected static IEnumerable<ValidationError> Map(IEnumerable<ValidationFailure> failures) =>
+        failures.Select(f => new ValidationError
+        {
+            ErrorCode = f.ErrorCode,
+            ErrorMessage = f.ErrorMessage,
+            PropertyName = f.PropertyName,
+        });
+
+    protected async Task<IReadOnlyCollection<ValidationFailure>> ValidateRequestAsync(
+        TRequest request,
+        CancellationToken cancellationToken = default)
     {
         var context = new ValidationContext<TRequest>(request);
 
         var validationResults = await Task.WhenAll(
-            Validators.Select(validator => validator.ValidateAsync(context, cancellationToken)));
+            _validators.Select(validator => validator.ValidateAsync(context, cancellationToken)));
 
-        var validationFailures = validationResults
+        return validationResults
             .Where(validationResult => !validationResult.IsValid)
             .SelectMany(validationResult => validationResult.Errors)
-            .ToArray();
-
-        return validationFailures;
+            .ToList();
     }
 }
