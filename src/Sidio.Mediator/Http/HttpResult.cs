@@ -114,6 +114,19 @@ public sealed class HttpResult<TResponse> : IHttpResult<TResponse>
         new(value, HttpStatusCode.BadRequest, errorCode, errorMessage, validationErrors);
 
     /// <summary>
+    /// Creates a new instance of <see cref="HttpResult{TResponse}"/> with the Bad Request status code.
+    /// </summary>
+    /// <param name="errorCode">The error code.</param>
+    /// <param name="errorMessage"></param>
+    /// <param name="value"></param>
+    /// <returns>A <see cref="HttpResult{TResponse}"/>.</returns>
+    public static HttpResult<TResponse> BadRequest(
+        string? errorCode = null,
+        string? errorMessage = null,
+        TResponse? value = default) =>
+        new(value, HttpStatusCode.BadRequest, errorCode, errorMessage, []);
+
+    /// <summary>
     /// Creates a new instance of <see cref="HttpResult{TResponse}"/> with the No-Content status code.
     /// </summary>
     /// <param name="httpStatusCode">The HTTP status code.</param>

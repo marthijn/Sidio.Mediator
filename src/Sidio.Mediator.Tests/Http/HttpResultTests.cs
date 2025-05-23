@@ -36,7 +36,7 @@ public sealed class HttpResultTests
     }
 
     [Fact]
-    public void NoContent_ReturnsNoContentResult()
+    public void NoContent_ReturnsResult()
     {
         // Act
         var result = HttpResult<string>.NoContent();
@@ -51,7 +51,7 @@ public sealed class HttpResultTests
     }
 
     [Fact]
-    public void Unauthorized_ReturnsNoContentResult()
+    public void Unauthorized_ReturnsResult()
     {
         // Act
         var result = HttpResult<string>.Unauthorized();
@@ -66,7 +66,7 @@ public sealed class HttpResultTests
     }
 
     [Fact]
-    public void BadRequest_ReturnsNoContentResult()
+    public void BadRequest_WithValidationErrors_ReturnsResult()
     {
         // Arrange
         var validationErrors = _fixture.CreateMany<ValidationError>().ToList();
@@ -81,6 +81,23 @@ public sealed class HttpResultTests
         result.ValidationErrors.Should().BeEquivalentTo(validationErrors);
         result.ErrorCode.Should().BeNull();
         result.ErrorMessage.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData("errorCode", "errorMessage")]
+    [InlineData(null, null)]
+    public void BadRequest_ReturnsResult(string? errorCode, string? errorMessage)
+    {
+        // Act
+        var result = HttpResult<string>.BadRequest(errorCode, errorMessage);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Value.Should().BeNull();
+        result.HttpStatusCode.Should().Be(HttpStatusCode.BadRequest);
+        result.ValidationErrors.Should().BeEmpty();
+        result.ErrorCode.Should().Be(errorCode);
+        result.ErrorMessage.Should().Be(errorMessage);
     }
 
     [Fact]
