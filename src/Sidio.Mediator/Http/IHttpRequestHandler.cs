@@ -3,8 +3,8 @@
 /// <summary>
 /// This interface is used to mark a generic HTTP request handler.
 /// </summary>
-/// <typeparam name="TRequest"></typeparam>
-/// <typeparam name="TResponse"></typeparam>
+/// <typeparam name="TRequest">The request type.</typeparam>
+/// <typeparam name="TResponse">The response type.</typeparam>
 public interface IHttpRequestHandler<in TRequest, TResponse>
     where TRequest : IHttpRequest<TResponse>
 {

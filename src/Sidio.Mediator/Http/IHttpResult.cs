@@ -5,7 +5,7 @@ namespace Sidio.Mediator.Http;
 /// <summary>
 /// This interface is used to mark a generic HTTP result.
 /// </summary>
-/// <typeparam name="TResponse"></typeparam>
+/// <typeparam name="TResponse">The response type.</typeparam>
 public interface IHttpResult<out TResponse> : IResult<TResponse>
 {
     /// <summary>
