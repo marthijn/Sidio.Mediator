@@ -41,12 +41,19 @@ namespace Sidio.Mediator
         sb.AppendLine($"{Spacing}using System.Threading;");
         sb.AppendLine($"{Spacing}using System.Threading.Tasks;");
         sb.AppendLine($"{Spacing}using Microsoft.Extensions.DependencyInjection;\n");
+
+        if (requestToGenerate.IsHttpRequest)
+        {
+            sb.AppendLine($"{Spacing}using Sidio.Mediator.Http;");
+        }
+
         if (!string.IsNullOrWhiteSpace(requestToGenerate.NamespaceName))
         {
-            sb.AppendLine($"{Spacing}using {requestToGenerate.NamespaceName};\n");
+            sb.AppendLine($"{Spacing}using {requestToGenerate.NamespaceName};");
         }
 
         // interface
+        sb.AppendLine();
         sb.AppendLine($"{Spacing}public partial interface IMediator");
         sb.AppendLine($"{Spacing}{{");
         if (requestToGenerate.ReturnType is not null)

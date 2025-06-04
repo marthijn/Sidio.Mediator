@@ -28,6 +28,8 @@ internal readonly record struct RequestToGenerate
 
     public string RequestHandlerInterface { get; }
 
+    public bool IsHttpRequest => RequestInterface.StartsWith("IHttpRequest");
+
     /// <summary>
     /// Creates a new instance of <see cref="RequestToGenerate"/> based on the provided class name, request interface, and namespace.
     /// </summary>
