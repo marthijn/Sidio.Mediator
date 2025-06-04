@@ -35,6 +35,8 @@ namespace Sidio.Mediator
     
     public static string GenerateClass(RequestToGenerate requestToGenerate)
     {
+        var http = requestToGenerate.IsHttpRequest ? "Http" : string.Empty;
+
         var sb = new StringBuilder();
         sb.AppendLine("namespace Sidio.Mediator");
         sb.AppendLine("{");
@@ -58,7 +60,7 @@ namespace Sidio.Mediator
         sb.AppendLine($"{Spacing}{{");
         if (requestToGenerate.ReturnType is not null)
         {
-            sb.AppendLine($"{Spacing}{Spacing}Task<Result<{requestToGenerate.ReturnType}>> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, CancellationToken cancellationToken = default);");
+            sb.AppendLine($"{Spacing}{Spacing}Task<{http}Result<{requestToGenerate.ReturnType}>> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, CancellationToken cancellationToken = default);");
         }
         else
         {
@@ -73,7 +75,7 @@ namespace Sidio.Mediator
 
         if (requestToGenerate.ReturnType is not null)
         {
-            sb.AppendLine($"{Spacing}{Spacing}public Task<Result<{requestToGenerate.ReturnType}>> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, CancellationToken cancellationToken = default)");
+            sb.AppendLine($"{Spacing}{Spacing}public Task<{http}Result<{requestToGenerate.ReturnType}>> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, CancellationToken cancellationToken = default)");
         }
         else
         {

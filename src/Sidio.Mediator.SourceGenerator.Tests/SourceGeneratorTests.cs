@@ -85,6 +85,8 @@ public class SourceGeneratorTests
     private const string SourceCodeHttpRequest = @"
     namespace Sidio.Mediator.SourceGenerator.Tests;
 
+    using Sidio.Mediator.Http;
+
     public class TestRequest1 : IHttpRequest<string>;
 
     public class TestRequest1Handler : IHttpRequestHandler<TestRequest1, string>

@@ -58,8 +58,8 @@ internal readonly record struct RequestToGenerate
                 className,
                 requestInterface,
                 namespaceName,
-                $"IHttpRequestHandler<{className}, {requestMatch.Groups["type"].Value}>",
-                requestMatch.Groups["type"].Value);
+                $"IHttpRequestHandler<{className}, {httpRequestMatch.Groups["type"].Value}>",
+                httpRequestMatch.Groups["type"].Value);
         }
 
         if (requestInterface == "IRequest")
