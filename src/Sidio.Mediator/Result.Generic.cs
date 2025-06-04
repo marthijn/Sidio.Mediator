@@ -25,7 +25,7 @@ public class Result<TResponse> : IResult<TResponse>
     public TResponse? Value { get; }
 
     /// <inheritdoc />
-    [MemberNotNullWhen(true, nameof(Value))]
+    ////[MemberNotNullWhen(true, nameof(Value))]
     public bool IsSuccess { get; }
 
     /// <inheritdoc />

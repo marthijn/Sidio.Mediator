@@ -31,7 +31,7 @@ public sealed class HttpResult<TResponse> : IHttpResult<TResponse>
     public HttpStatusCode HttpStatusCode { get; }
 
     /// <inheritdoc />
-    [MemberNotNullWhen(true, nameof(Value))]
+    ////[MemberNotNullWhen(true, nameof(Value))]
     public bool IsHttp200Ok => HttpStatusCode == HttpStatusCode.OK;
 
     /// <inheritdoc />
