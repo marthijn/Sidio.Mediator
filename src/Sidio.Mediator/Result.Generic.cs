@@ -62,7 +62,11 @@ public class Result<TResponse> : IResult<TResponse>
     /// <returns>A <see cref="Result{TResponse}"/>.</returns>
     public static Result<TResponse> Success(TResponse value)
     {
-        ArgumentNullException.ThrowIfNull(value);
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value), "Value cannot be null for a successful result.");
+        }
+
         return new Result<TResponse>(value, true, null, null, []);
     }
 }

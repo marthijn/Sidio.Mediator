@@ -6,15 +6,19 @@
         <Nullable>enable</Nullable>
         <LangVersion>Latest</LangVersion>
 
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+        <IsRoslynComponent>true</IsRoslynComponent>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
         <Authors>Marthijn van den Heuvel,Sidio</Authors>
         <Copyright>Copyright (c) 2025 Marthijn van den Heuvel</Copyright>
-        <PackageId>Sidio.Mediator</PackageId>
+        <PackageId>Sidio.Mediator.SourceGenerator</PackageId>
         <RepositoryType>git</RepositoryType>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <Description>A simple implemenetation of the mediator pattern in .NET.</Description>
-        <PackageTags>mediator,mediator-pattern,request,requesthandler</PackageTags>
+        <Description>A source generator for a centralized IMediator implementation.</Description>
+        <PackageTags>mediator,mediator-pattern,request,requesthandler,source-generator</PackageTags>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Deterministic>true</Deterministic>
@@ -25,25 +29,26 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+      <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Scrutor" Version="6.0.1" />
+      <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.13.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Sidio.Mediator\Sidio.Mediator.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true"
+              PackagePath="analyzers/dotnet/cs" Visible="false" />
     </ItemGroup>
 
     <ItemGroup>
         <None Include="..\..\LICENSE" Pack="true" PackagePath="\"/>
         <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
         <None Include="icon.png" Pack="true" PackagePath=""/>
-    </ItemGroup>
-
-    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-    </PropertyGroup>
-    
-    <ItemGroup>
-        <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     </ItemGroup>
 
 </Project>

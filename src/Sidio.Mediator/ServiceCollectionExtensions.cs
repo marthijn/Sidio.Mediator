@@ -20,7 +20,16 @@ public static class ServiceCollectionExtensions
     /// <returns>The <see cref="IServiceCollection"/>.</returns>
     public static IServiceCollection AddMediator(this IServiceCollection services, params Type[] assemblyTypes)
     {
-        ArgumentNullException.ThrowIfNull(assemblyTypes);
+        if (assemblyTypes == null || assemblyTypes.Length == 0)
+        {
+            throw new ArgumentException("At least one assembly type must be provided.", nameof(assemblyTypes));
+        }
+
+        if (assemblyTypes.Any(x => x == null))
+        {
+            throw new ArgumentException("Assembly types cannot contain null values.", nameof(assemblyTypes));
+        }
+
         services.Scan(s => s.FromAssembliesOf(assemblyTypes)
             .AddClasses(c => c.AssignableTo(typeof(IRequestHandler<,>)), publicOnly: false)
             .AsImplementedInterfaces()
@@ -31,6 +40,7 @@ public static class ServiceCollectionExtensions
             .AddClasses(c => c.AssignableTo(typeof(IHttpRequestHandler<,>)), publicOnly: false)
             .AsImplementedInterfaces()
             .WithScopedLifetime());
+
         return services;
     }
 }

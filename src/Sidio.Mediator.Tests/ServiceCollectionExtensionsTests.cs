@@ -5,7 +5,20 @@ namespace Sidio.Mediator.Tests;
 public sealed class ServiceCollectionExtensionsTests
 {
     [Fact]
-    public void AddMediator_WithoutAssemblyMarker_ThrowsArgumentNullException()
+    public void AddMediator_WithoutAssemblyMarker_ThrowsArgumentException()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+
+        // Act
+        var exception = Record.Exception(() => services.AddMediator());
+
+        // Assert
+        exception.Should().BeOfType<ArgumentException>();
+    }
+
+    [Fact]
+    public void AddMediator_WithoutNullAssemblyMarker_ThrowsArgumentException()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -14,7 +27,7 @@ public sealed class ServiceCollectionExtensionsTests
         var exception = Record.Exception(() => services.AddMediator(null!));
 
         // Assert
-        exception.Should().BeOfType<ArgumentNullException>();
+        exception.Should().BeOfType<ArgumentException>();
     }
 
     [Fact]

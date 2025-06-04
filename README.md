@@ -29,7 +29,7 @@ public class MyRequestHandler : IRequestHandler<MyRequest, string>
     }
 }
 
-// Register the request handler
+// Provide an arbitrary type to register all request handlers in the assembly of the type:
 services.AddMediator(typeof(MyRequest));
 
 // Get the request handler from the service provider
@@ -69,6 +69,31 @@ public class MyRequestValidator : AbstractValidator<MyRequest>
     }
 }
 
-// Register the validators
+// Provide an arbitrary type to register all validators in the assembly of the type:
 services.AddMediatorValidation(typeof(MyRequest));
 ```
+
+## Source generators (v2.0+)
+In version 2.0 and later, Sidio.Mediator includes source generators that creates an `IMediator` implementation at 
+compile time.
+The `IMediator` implementation contains a method for each request. For example, for a request named `MyRequest`:
+```csharp
+public class MyRequest : IRequest<string>;
+```
+The generated `IMediator` will have a method:
+```csharp
+Task<Result<string>> MyRequestAsync(MyRequest request, CancellationToken cancellationToken = default);
+```
+
+### Setup
+- Add package reference to `Sidio.Mediator.SourceGenerator`.
+- Register the `IMediator` service in your `Startup.cs` or `Program.cs`:
+
+```csharp
+services.AddScoped<IMediator, Mediator>();
+```
+
+### Limitations
+- Requests should have a unique name across the project which implements the source generator.
+- Requests should not be nested in other classes.
+- Requests should always implement `IRequest`, `IRequest<T>` or `IHttpRequest<T>`. Inheritance of base/abstract requests is not supported.

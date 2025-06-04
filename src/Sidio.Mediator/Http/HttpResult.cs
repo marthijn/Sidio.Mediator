@@ -142,7 +142,11 @@ public sealed class HttpResult<TResponse> : IHttpResult<TResponse>
     /// <returns>A <see cref="HttpResult{TResponse}"/>.</returns>
     public static HttpResult<TResponse> Ok(TResponse value)
     {
-        ArgumentNullException.ThrowIfNull(value);
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value), "Value cannot be null for a 200 OK result.");
+        }
+
         return new HttpResult<TResponse>(value, HttpStatusCode.OK, null, null, []);
     }
 
