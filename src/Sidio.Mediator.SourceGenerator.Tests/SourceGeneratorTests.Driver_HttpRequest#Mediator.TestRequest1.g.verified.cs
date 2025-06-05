@@ -4,8 +4,8 @@ namespace Sidio.Mediator
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Extensions.DependencyInjection;
-
     using Sidio.Mediator.Http;
+    using GlobalUsing;
     using Sidio.Mediator.SourceGenerator.Tests;
 
     public partial interface IMediator

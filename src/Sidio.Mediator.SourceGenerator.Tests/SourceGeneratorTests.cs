@@ -83,6 +83,8 @@ public class SourceGeneratorTests
     }";
 
     private const string SourceCodeHttpRequest = @"
+    using GlobalUsing;
+
     namespace Sidio.Mediator.SourceGenerator.Tests;
 
     using Sidio.Mediator.Http;

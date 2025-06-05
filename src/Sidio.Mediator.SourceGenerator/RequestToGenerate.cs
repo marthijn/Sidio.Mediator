@@ -9,6 +9,7 @@ internal readonly record struct RequestToGenerate
         string requestInterface,
         string namespaceName,
         string requestHandlerInterface,
+        ISet<string> usings,
         string? returnType = null)
     {
         ClassName = className;
@@ -16,6 +17,7 @@ internal readonly record struct RequestToGenerate
         NamespaceName = namespaceName;
         ReturnType = returnType;
         RequestHandlerInterface = requestHandlerInterface;
+        Usings = usings;
     }
 
     public string ClassName { get; }
@@ -28,6 +30,8 @@ internal readonly record struct RequestToGenerate
 
     public string RequestHandlerInterface { get; }
 
+    public ISet<string> Usings { get; }
+
     public bool IsHttpRequest => RequestInterface.StartsWith("IHttpRequest");
 
     /// <summary>
@@ -36,9 +40,10 @@ internal readonly record struct RequestToGenerate
     /// <param name="className">The name of the class. E.g. MyRequest.</param>
     /// <param name="requestInterface">The interface of the request. E.g. IRequest{string}.</param>
     /// <param name="namespaceName">The namespace of the request.</param>
+    /// <param name="usings">The usings.</param>
     /// <returns>A <see cref="RequestToGenerate"/>.</returns>
     /// <exception cref="ArgumentException"></exception>
-    public static RequestToGenerate Create(string className, string requestInterface, string namespaceName)
+    public static RequestToGenerate Create(string className, string requestInterface, string namespaceName, ISet<string> usings)
     {
         var requestMatch = Regex.Match(requestInterface, "IRequest<(?<type>[^>]+)>");
         if (requestMatch.Success)
@@ -48,6 +53,7 @@ internal readonly record struct RequestToGenerate
                 requestInterface,
                 namespaceName,
                 $"IRequestHandler<{className}, {requestMatch.Groups["type"].Value}>",
+                usings,
                 requestMatch.Groups["type"].Value);
         }
 
@@ -59,6 +65,7 @@ internal readonly record struct RequestToGenerate
                 requestInterface,
                 namespaceName,
                 $"IHttpRequestHandler<{className}, {httpRequestMatch.Groups["type"].Value}>",
+                usings,
                 httpRequestMatch.Groups["type"].Value);
         }
 
@@ -68,7 +75,8 @@ internal readonly record struct RequestToGenerate
                 className,
                 requestInterface,
                 namespaceName,
-                $"IRequestHandler<{className}>");
+                $"IRequestHandler<{className}>",
+                usings);
         }
 
         throw new ArgumentException($"Unsupported interface type: {requestInterface}", nameof(requestInterface));

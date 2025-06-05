@@ -58,9 +58,10 @@ public sealed class MediatorGenerator : IIncrementalGenerator
             if (IsValidRequestType(typeName))
             {
                 var ns = GetNamespace(classDeclaration);
+                var usings = GetUsings(classDeclaration);
 
                 // we found a matching interface, return the class name
-                return RequestToGenerate.Create(classDeclaration.Identifier.Text, typeName, ns);
+                return RequestToGenerate.Create(classDeclaration.Identifier.Text, typeName, ns, usings);
             }
         }
 
@@ -80,6 +81,46 @@ public sealed class MediatorGenerator : IIncrementalGenerator
 
         return  typeName.StartsWith("IRequest", StringComparison.Ordinal) ||
                typeName.StartsWith("IHttpRequest<", StringComparison.Ordinal);
+    }
+
+    private static HashSet<string> GetUsings(BaseTypeDeclarationSyntax syntax)
+    {
+        var usings = new HashSet<string>();
+
+        // Get the containing syntax node for the type declaration
+        // (could be a nested type, for example)
+        SyntaxNode? potentialNamespaceParent = syntax.Parent;
+
+        // Keep moving "out" of nested classes etc until we get to a namespace
+        // or until we run out of parents
+        while (potentialNamespaceParent != null &&
+               potentialNamespaceParent is not NamespaceDeclarationSyntax
+               && potentialNamespaceParent is not FileScopedNamespaceDeclarationSyntax)
+        {
+            potentialNamespaceParent = potentialNamespaceParent.Parent;
+        }
+
+        if (potentialNamespaceParent is BaseNamespaceDeclarationSyntax namespaceParent)
+        {
+            foreach (var u in namespaceParent.Usings.Where(x => !string.IsNullOrEmpty(x.Name?.ToString()))
+                         .Select(x => x.Name!.ToString()))
+            {
+                usings.Add(u);
+            }
+
+            if (potentialNamespaceParent.Parent is CompilationUnitSyntax compilationUnit)
+            {
+                // Add global usings from the compilation unit
+                foreach (var globalUsing in compilationUnit.Usings
+                             .Where(x => !string.IsNullOrEmpty(x.Name?.ToString()))
+                             .Select(x => x.Name!.ToString()))
+                {
+                    usings.Add(globalUsing);
+                }
+            }
+        }
+
+        return usings;
     }
 
     // determine the namespace the class/enum/struct is declared in, if any
