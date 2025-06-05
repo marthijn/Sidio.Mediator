@@ -5,23 +5,24 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace Sidio.Mediator.SourceGenerator;
 
+/// <summary>
+/// This generator creates a partial class for each class that implements the <c>IRequest</c> or <c>IHttpRequest</c> interface.
+/// </summary>
 [Generator]
 public sealed class MediatorGenerator : IIncrementalGenerator
 {
     private const string FileNamePrefix = "Mediator";
 
+    /// <inheritdoc />
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         context.RegisterPostInitializationOutput(ctx => ctx.AddSource(
             $"{FileNamePrefix}.g.cs",
             SourceText.From(SourceGenerationHelper.MediatorPartialClassSource, Encoding.UTF8)));
 
-        IncrementalValuesProvider<RequestToGenerate?> requestsToGenerate = context.SyntaxProvider.CreateSyntaxProvider(
+        var requestsToGenerate = context.SyntaxProvider.CreateSyntaxProvider(
             predicate: static (s, _) => IsSyntaxTargetForGeneration(s),
-            transform: static (ctx, _) =>
-            {
-                return GetSemanticTargetForGeneration(ctx);
-            }).Where(static m => m is not null);
+            transform: static (ctx, _) => GetSemanticTargetForGeneration(ctx)).Where(static m => m is not null);
 
         context.RegisterSourceOutput(
             requestsToGenerate,
@@ -102,8 +103,7 @@ public sealed class MediatorGenerator : IIncrementalGenerator
 
         if (potentialNamespaceParent is BaseNamespaceDeclarationSyntax namespaceParent)
         {
-            foreach (var u in namespaceParent.Usings.Where(x => !string.IsNullOrEmpty(x.Name?.ToString()))
-                         .Select(x => x.Name!.ToString()))
+            foreach (var u in namespaceParent.Usings.ToStringEnumerable())
             {
                 usings.Add(u);
             }
@@ -111,9 +111,7 @@ public sealed class MediatorGenerator : IIncrementalGenerator
             if (potentialNamespaceParent.Parent is CompilationUnitSyntax compilationUnit)
             {
                 // Add global usings from the compilation unit
-                foreach (var globalUsing in compilationUnit.Usings
-                             .Where(x => !string.IsNullOrEmpty(x.Name?.ToString()))
-                             .Select(x => x.Name!.ToString()))
+                foreach (var globalUsing in compilationUnit.Usings.ToStringEnumerable())
                 {
                     usings.Add(globalUsing);
                 }
