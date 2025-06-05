@@ -43,6 +43,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <None Include="@(ResolvedCompileFileDefinitions)" Pack="true" PackagePath="analyzers/dotnet/cs" />
+    </ItemGroup>
+
+    <ItemGroup>
         <None Include="..\..\LICENSE" Pack="true" PackagePath="\"/>
         <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
         <None Include="icon.png" Pack="true" PackagePath=""/>
