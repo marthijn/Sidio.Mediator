@@ -15,7 +15,7 @@ public class SourceGeneratorTests
         _ = driver.GetRunResult().Results.Single();
 
         // Assert
-        return Verify(driver);
+        return Verify(driver).ScrubLinesContaining("///");
     }
 
     [Fact]
@@ -28,7 +28,7 @@ public class SourceGeneratorTests
         _ = driver.GetRunResult().Results.Single();
 
         // Assert
-        return Verify(driver);
+        return Verify(driver).ScrubLinesContaining("///");
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public class SourceGeneratorTests
         _ = driver.GetRunResult().Results.Single();
 
         // Assert
-        return Verify(driver);
+        return Verify(driver).ScrubLinesContaining("///");
     }
 
     private static GeneratorDriver BuildDriver(string sourceCode)

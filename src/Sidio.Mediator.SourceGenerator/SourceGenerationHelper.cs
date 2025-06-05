@@ -40,6 +40,9 @@ namespace Sidio.Mediator
 
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Adds the <see cref=""IMediator""/> service to the <see cref=""IServiceCollection""/>.
+        /// </summary>
         public static IServiceCollection AddMediatorService(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Scoped)
         {
             if (services == null)

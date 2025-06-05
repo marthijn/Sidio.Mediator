@@ -10,6 +10,9 @@ A simple implementation of the mediator pattern in .NET.
 ## Request validation package
 [![NuGet Version](https://img.shields.io/nuget/v/Sidio.Mediator.Validation)](https://www.nuget.org/packages/Sidio.Mediator.Validation/)
 
+## Source generation for the Mediator service
+[![NuGet Version](https://img.shields.io/nuget/v/Sidio.Mediator.SourceGenerator)](https://www.nuget.org/packages/Sidio.Mediator.SourceGenerator/)
+
 # Usage
 ## Requests and requests handlers
 ```csharp
@@ -74,7 +77,7 @@ services.AddMediatorValidation(typeof(MyRequest));
 ```
 
 ## Source generators (v2.0+)
-In version 2.0 and later, Sidio.Mediator includes source generators that creates an `IMediator` implementation at 
+In version 2.0 and later, Sidio.Mediator.SourceGenerator includes source generators that create an `IMediator` service implementation at 
 compile time.
 The `IMediator` implementation contains a method for each request. For example, for a request named `MyRequest`:
 ```csharp
@@ -86,11 +89,11 @@ Task<Result<string>> MyRequestAsync(MyRequest request, CancellationToken cancell
 ```
 
 ### Setup
-- Add package reference to `Sidio.Mediator.SourceGenerator`.
+- Add package reference to `Sidio.Mediator.SourceGenerator` in the project that contain the `IRequest` or `IHttpRequest` implementations.
 - Register the `IMediator` service in your `Startup.cs` or `Program.cs`:
 
 ```csharp
-services.AddScoped<IMediator, Mediator>();
+services.AddMediatorService();
 ```
 
 ### Limitations
