@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Sidio.Mediator.SourceGenerator.IntegrationTests.Requests;
 using Sidio.Mediator.Validation;
@@ -13,7 +14,7 @@ public sealed class MediatorTests
         // Arrange
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddMediator(typeof(MediatorTests));
-        serviceCollection.AddScoped<IMediator, Mediator>();
+        serviceCollection.AddMediatorService();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
         var mediator = serviceProvider.GetRequiredService<IMediator>();
@@ -33,7 +34,7 @@ public sealed class MediatorTests
         // Arrange
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddMediator(typeof(MediatorTests));
-        serviceCollection.AddScoped<IMediator, Mediator>();
+        serviceCollection.AddMediatorService();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
         var mediator = serviceProvider.GetRequiredService<IMediator>();
@@ -54,7 +55,7 @@ public sealed class MediatorTests
         // Arrange
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddMediator(typeof(MediatorTests));
-        serviceCollection.AddScoped<IMediator, Mediator>();
+        serviceCollection.AddMediatorService();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
         var mediator = serviceProvider.GetRequiredService<IMediator>();
@@ -77,7 +78,7 @@ public sealed class MediatorTests
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddLogging();
         serviceCollection.AddMediator(typeof(MediatorTests)).AddMediatorValidation(typeof(MediatorTests));
-        serviceCollection.AddScoped<IMediator, Mediator>();
+        serviceCollection.AddMediatorService();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
         var mediator = serviceProvider.GetRequiredService<IMediator>();
@@ -89,5 +90,27 @@ public sealed class MediatorTests
 
         // Assert
         Assert.Equal(expectedResult, result.IsSuccess);
+    }
+
+    [Theory]
+    [InlineData(ServiceLifetime.Scoped)]
+    [InlineData(ServiceLifetime.Transient)]
+    [InlineData(ServiceLifetime.Singleton)]
+    public void AddMediatorService_ServiceAdded(ServiceLifetime serviceLifetime)
+    {
+        // Arrange
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddMediatorService(serviceLifetime);
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+
+        // Act
+        var serviceDescriptor = serviceCollection.FirstOrDefault(
+            d => d.ServiceType == typeof(IMediator));
+        var mediator = serviceProvider.GetService<IMediator>();
+
+        // Assert
+        Assert.NotNull(serviceDescriptor);
+        Assert.Equal(serviceLifetime, serviceDescriptor.Lifetime);
+        Assert.NotNull(mediator);
     }
 }
