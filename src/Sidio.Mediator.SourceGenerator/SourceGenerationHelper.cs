@@ -6,7 +6,12 @@ internal static class SourceGenerationHelper
 {
     private const string Spacing = "    ";
 
-    public const string MediatorPartialClassSource = @"
+    private const string ClassHeader =
+"#nullable enable\n" +
+"#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member\n" +
+"#pragma warning disable SA1600 // Elements should be documented\n";
+
+    public const string MediatorPartialClassSource = ClassHeader + @"
 namespace Sidio.Mediator
 {
     using System;
@@ -60,6 +65,7 @@ namespace Sidio.Mediator
         var httpPrefix = requestToGenerate.IsHttpRequest ? "Http" : string.Empty;
 
         var sb = new StringBuilder();
+        sb.AppendLine(ClassHeader);
         sb.AppendLine("namespace Sidio.Mediator");
         sb.AppendLine("{");
         foreach (var u in usings)
