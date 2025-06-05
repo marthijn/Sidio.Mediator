@@ -37,6 +37,21 @@ namespace Sidio.Mediator
             _serviceProvider = serviceProvider;
         }
     }
+
+    public static class ServiceCollectionExtensions
+    {
+        public static IServiceCollection AddMediatorService(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            var serviceDescriptor = new ServiceDescriptor(typeof(IMediator), typeof(Mediator), lifetime);
+            services.Add(serviceDescriptor);
+            return services;
+        }
+    }
 }";
     
     public static string GenerateClass(RequestToGenerate requestToGenerate)
