@@ -19,7 +19,7 @@
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <Description>A source generator for a centralized IMediator implementation.</Description>
         <PackageTags>mediator,mediator-pattern,request,requesthandler,source-generator</PackageTags>
-        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSymbols>false</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Deterministic>true</Deterministic>
         <PackageReleaseNotes>https://github.com/marthijn/Sidio.Mediator/releases</PackageReleaseNotes>
@@ -55,5 +55,10 @@
         <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
         <None Include="icon.png" Pack="true" PackagePath=""/>
     </ItemGroup>
+
+    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+
 
 </Project>
