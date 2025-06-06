@@ -1,5 +1,5 @@
 # Sidio.Mediator
-A simple implementation of the mediator pattern in .NET.
+A simple implementation of the [mediator](https://en.wikipedia.org/wiki/Mediator_pattern) pattern in .NET.
 
 [![build](https://github.com/marthijn/Sidio.Mediator/actions/workflows/build.yml/badge.svg)](https://github.com/marthijn/Sidio.Mediator/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/marthijn/Sidio.Mediator/badge.svg?branch=main)](https://coveralls.io/github/marthijn/Sidio.Mediator?branch=main)
@@ -79,7 +79,7 @@ services.AddMediatorValidation(typeof(MyRequest));
 ## Source generators (v2.0+)
 In version 2.0 and later, Sidio.Mediator.SourceGenerator includes source generators that create an `IMediator` service implementation at 
 compile time.
-The `IMediator` implementation contains a method for each request. For example, for a request named `MyRequest`:
+The `IMediator` implementation contains a method for each request. For example, a request named `MyRequest`:
 ```csharp
 public class MyRequest : IRequest<string>;
 ```
@@ -100,9 +100,9 @@ services.AddMediatorService();
 - Requests should have a unique name across the project which implements the source generator.
 - Requests should not be nested in other classes.
 - Requests should always implement `IRequest`, `IRequest<T>` or `IHttpRequest<T>`. Inheritance of base/abstract requests is not supported.
-- Classes used in requests that are part of the parent namespace of that request should be included in global usings, e.g.:
+- Types used in requests that are part of the parent namespace of that request should be included in global usings, e.g. in the csproj file:
 ```xml
 <ItemGroup>
-  <Using Include="MyProject" />
+  <Using Include="MyNamespace" />
 </ItemGroup>
 ```
