@@ -33,7 +33,6 @@
       <ProjectReference Include="..\Sidio.Mediator.SourceGenerator\Sidio.Mediator.SourceGenerator.csproj"
                         OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
       <ProjectReference Include="..\Sidio.Mediator.Validation\Sidio.Mediator.Validation.csproj" />
-      <ProjectReference Include="..\Sidio.Mediator\Sidio.Mediator.csproj" />
     </ItemGroup>
 
 </Project>

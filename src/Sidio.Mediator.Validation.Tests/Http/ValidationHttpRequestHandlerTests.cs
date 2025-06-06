@@ -58,7 +58,7 @@ public sealed class ValidationHttpRequestHandlerTests
 
     public sealed class TestRequest : IHttpRequest<string>
     {
-        public string? Name { get; init; }
+        public string? Name { get; set; }
     }
 
     public sealed class TestRequestHandler : IHttpRequestHandler<TestRequest, string>

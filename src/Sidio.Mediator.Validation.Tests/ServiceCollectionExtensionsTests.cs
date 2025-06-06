@@ -38,7 +38,7 @@ public sealed class ServiceCollectionExtensionsTests
 
     public sealed class TestRequest : IRequest
     {
-        public string? Name { get; init; }
+        public string? Name { get; set; }
     }
 
     public sealed class TestRequestHandler : IRequestHandler<TestRequest>
