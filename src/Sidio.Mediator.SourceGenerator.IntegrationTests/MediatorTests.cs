@@ -69,6 +69,26 @@ public sealed class MediatorTests
         Assert.True(result.IsSuccess);
     }
 
+    [Fact]
+    public async Task DoubleTypedRequest()
+    {
+        // Arrange
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddMediator(typeof(MediatorTests));
+        serviceCollection.AddMediatorService();
+
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var mediator = serviceProvider.GetRequiredService<IMediator>();
+
+        var request = new TestRequest4();
+
+        // Act
+        var result = await mediator.TestRequest4Async(request);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+    }
+
     [Theory]
     [InlineData("test", true)]
     [InlineData("", false)]

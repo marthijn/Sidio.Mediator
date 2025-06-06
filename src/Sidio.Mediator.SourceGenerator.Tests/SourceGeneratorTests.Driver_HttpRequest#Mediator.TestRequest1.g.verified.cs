@@ -15,14 +15,14 @@ namespace Sidio.Mediator
 
     public partial interface IMediator
     {
-        Task<HttpResult<string>> TestRequest1Async(TestRequest1 request, CancellationToken cancellationToken = default);
+        Task<HttpResult<IReadonlyList<string>>> TestRequest1Async(TestRequest1 request, CancellationToken cancellationToken = default);
     }
 
     public partial class Mediator
     {
-        public Task<HttpResult<string>> TestRequest1Async(TestRequest1 request, CancellationToken cancellationToken = default)
+        public Task<HttpResult<IReadonlyList<string>>> TestRequest1Async(TestRequest1 request, CancellationToken cancellationToken = default)
         {
-            var requestHandler = _serviceProvider.GetRequiredService<IHttpRequestHandler<TestRequest1, string>>();
+            var requestHandler = _serviceProvider.GetRequiredService<IHttpRequestHandler<TestRequest1, IReadonlyList<string>>>();
             return requestHandler.HandleAsync(request, cancellationToken);
         }
     }

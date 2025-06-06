@@ -89,13 +89,13 @@ public class SourceGeneratorTests
 
     using Sidio.Mediator.Http;
 
-    public class TestRequest1 : IHttpRequest<string>;
+    public class TestRequest1 : IHttpRequest<IReadonlyList<string>>;
 
-    public class TestRequest1Handler : IHttpRequestHandler<TestRequest1, string>
+    public class TestRequest1Handler : IHttpRequestHandler<TestRequest1, IReadonlyList<string>>
     {
         public Task<HttpResult<string>> HandleAsync(TestRequest1 request, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(HttpResult<string>.Success(""OK""));
+            return Task.FromResult(HttpResult<IReadonlyList<string>>.Success(new List<string> { ""Test1"", ""Test2"" }));
         }
     }";
 }

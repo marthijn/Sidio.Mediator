@@ -60,9 +60,10 @@ public sealed class MediatorGenerator : IIncrementalGenerator
             {
                 var ns = GetNamespace(classDeclaration);
                 var usings = GetUsings(classDeclaration);
+                var genericType = GetGenericType(baseType);
 
                 // we found a matching interface, return the class name
-                return RequestToGenerate.Create(classDeclaration.Identifier.Text, typeName, ns, usings);
+                return RequestToGenerate.Create(classDeclaration.Identifier.Text, typeName, ns, usings, genericType);
             }
         }
 
@@ -166,5 +167,16 @@ public sealed class MediatorGenerator : IIncrementalGenerator
 
         // return the final namespace
         return nameSpace;
+    }
+
+    private static string? GetGenericType(BaseTypeSyntax syntax)
+    {
+        if (syntax.Type is GenericNameSyntax genericName)
+        {
+            // If the type is a generic name, return the type argument
+            return genericName.TypeArgumentList.Arguments.FirstOrDefault()?.ToString();
+        }
+
+        return null;
     }
 }

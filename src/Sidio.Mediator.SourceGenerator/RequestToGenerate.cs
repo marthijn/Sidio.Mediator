@@ -41,32 +41,36 @@ internal readonly record struct RequestToGenerate
     /// <param name="requestInterface">The interface of the request. E.g. IRequest{string}.</param>
     /// <param name="namespaceName">The namespace of the request.</param>
     /// <param name="usings">The usings.</param>
+    /// <param name="genericReturnType">The generic return type.</param>
     /// <returns>A <see cref="RequestToGenerate"/>.</returns>
     /// <exception cref="ArgumentException"></exception>
-    public static RequestToGenerate Create(string className, string requestInterface, string namespaceName, ISet<string> usings)
+    public static RequestToGenerate Create(
+        string className,
+        string requestInterface,
+        string namespaceName,
+        ISet<string> usings,
+        string? genericReturnType = null)
     {
-        var requestMatch = Regex.Match(requestInterface, "IRequest<(?<type>[^>]+)>");
-        if (requestMatch.Success)
+        if (requestInterface.StartsWith("IRequest<"))
         {
             return new RequestToGenerate(
                 className,
                 requestInterface,
                 namespaceName,
-                $"IRequestHandler<{className}, {requestMatch.Groups["type"].Value}>",
+                $"IRequestHandler<{className}, {genericReturnType}>",
                 usings,
-                requestMatch.Groups["type"].Value);
+                genericReturnType);
         }
 
-        var httpRequestMatch = Regex.Match(requestInterface, "IHttpRequest<(?<type>[^>]+)>");
-        if (httpRequestMatch.Success)
+        if (requestInterface.StartsWith("IHttpRequest<"))
         {
             return new RequestToGenerate(
                 className,
                 requestInterface,
                 namespaceName,
-                $"IHttpRequestHandler<{className}, {httpRequestMatch.Groups["type"].Value}>",
+                $"IHttpRequestHandler<{className}, {genericReturnType}>",
                 usings,
-                httpRequestMatch.Groups["type"].Value);
+                genericReturnType);
         }
 
         if (requestInterface == "IRequest")
