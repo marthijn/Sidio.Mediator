@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace Sidio.Mediator.SourceGenerator;
+﻿namespace Sidio.Mediator.SourceGenerator;
 
 internal readonly record struct RequestToGenerate
 {
