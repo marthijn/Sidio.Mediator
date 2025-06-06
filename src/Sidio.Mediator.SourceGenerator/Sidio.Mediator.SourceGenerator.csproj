@@ -19,7 +19,7 @@
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <Description>A source generator for a centralized IMediator implementation.</Description>
         <PackageTags>mediator,mediator-pattern,request,requesthandler,source-generator</PackageTags>
-        <IncludeSymbols>false</IncludeSymbols>
+        <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Deterministic>true</Deterministic>
         <PackageReleaseNotes>https://github.com/marthijn/Sidio.Mediator/releases</PackageReleaseNotes>
