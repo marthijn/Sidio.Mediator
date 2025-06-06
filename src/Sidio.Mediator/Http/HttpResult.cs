@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+﻿using System.Net;
 
 namespace Sidio.Mediator.Http;
 
@@ -31,7 +30,9 @@ public sealed class HttpResult<TResponse> : IHttpResult<TResponse>
     public HttpStatusCode HttpStatusCode { get; }
 
     /// <inheritdoc />
-    ////[MemberNotNullWhen(true, nameof(Value))]
+#if NET5_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(true, nameof(Value))]
+#endif
     public bool IsHttp200Ok => HttpStatusCode == HttpStatusCode.OK;
 
     /// <inheritdoc />

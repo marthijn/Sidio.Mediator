@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Sidio.Mediator;
+﻿namespace Sidio.Mediator;
 
 /// <summary>
 /// This class represents the result of a request.
@@ -25,7 +23,9 @@ public class Result<TResponse> : IResult<TResponse>
     public TResponse? Value { get; }
 
     /// <inheritdoc />
-    ////[MemberNotNullWhen(true, nameof(Value))]
+#if NET5_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(true, nameof(Value))]
+#endif
     public bool IsSuccess { get; }
 
     /// <inheritdoc />
