@@ -54,7 +54,7 @@ public sealed class ValidationRequestHandlerTestsTyped
 
     public sealed class TestRequest : IRequest<string>
     {
-        public string? Name { get; init; }
+        public string? Name { get; set; }
     }
 
     public sealed class TestRequestHandler : IRequestHandler<TestRequest, string>

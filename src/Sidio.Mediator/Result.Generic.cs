@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Sidio.Mediator;
+﻿namespace Sidio.Mediator;
 
 /// <summary>
 /// This class represents the result of a request.
@@ -25,7 +23,9 @@ public class Result<TResponse> : IResult<TResponse>
     public TResponse? Value { get; }
 
     /// <inheritdoc />
-    [MemberNotNullWhen(true, nameof(Value))]
+#if NET5_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.MemberNotNullWhen(true, nameof(Value))]
+#endif
     public bool IsSuccess { get; }
 
     /// <inheritdoc />
@@ -62,7 +62,11 @@ public class Result<TResponse> : IResult<TResponse>
     /// <returns>A <see cref="Result{TResponse}"/>.</returns>
     public static Result<TResponse> Success(TResponse value)
     {
-        ArgumentNullException.ThrowIfNull(value);
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value), "Value cannot be null for a successful result.");
+        }
+
         return new Result<TResponse>(value, true, null, null, []);
     }
 }

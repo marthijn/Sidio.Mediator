@@ -76,7 +76,7 @@ public sealed class ValidationRequestHandlerTests
 
     public sealed class TestRequest : IRequest
     {
-        public string? Name { get; init; }
+        public string? Name { get; set; }
     }
 
     public sealed class TestRequestHandler : IRequestHandler<TestRequest>
@@ -97,7 +97,7 @@ public sealed class ValidationRequestHandlerTests
 
     public sealed class TestRequest2 : IRequest
     {
-        public string? Name { get; init; }
+        public string? Name { get; set; }
     }
 
     public sealed class TestRequestHandler2 : IRequestHandler<TestRequest2>
