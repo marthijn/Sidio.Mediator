@@ -44,10 +44,19 @@ jobs:
         run: dotnet test --configuration Release /p:Version=${RELEASE_VERSION} --no-build
       #- name: Pack
       #  run: dotnet pack --configuration Release /p:Version=${RELEASE_VERSION} --output ${{ env.NuGetDirectory }} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
-      - name: Pack projects except SourceGenerators
+      - name: Pack projects
         run: |
           for proj in $(find . -name '*.csproj'); do
-            if [[ "$proj" != *SourceGenerator* ]]; then
+            if [[ "$proj" == *Test* ]]; then
+              echo "Skipping $proj (Test project)"
+            elif [[ "$proj" == *SourceGenerator* ]]; then
+              echo "Packing $proj without symbols (SourceGenerator)"
+              dotnet pack "$proj" \
+                --configuration Release \
+                /p:Version=${RELEASE_VERSION} \
+                --output ${{ env.NuGetDirectory }} \
+                -p:IncludeSymbols=false
+            else
               echo "Packing $proj"
               dotnet pack "$proj" \
                 --configuration Release \
@@ -55,13 +64,6 @@ jobs:
                 --output ${{ env.NuGetDirectory }} \
                 -p:IncludeSymbols=true \
                 -p:SymbolPackageFormat=snupkg
-            else
-              echo "Packing $proj without symbols"
-              dotnet pack "$proj" \
-                --configuration Release \
-                /p:Version=${RELEASE_VERSION} \
-                --output ${{ env.NuGetDirectory }} \
-                -p:IncludeSymbols=false
             fi
           done
       - name: Push
