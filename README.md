@@ -100,3 +100,9 @@ services.AddMediatorService();
 - Requests should have a unique name across the project which implements the source generator.
 - Requests should not be nested in other classes.
 - Requests should always implement `IRequest`, `IRequest<T>` or `IHttpRequest<T>`. Inheritance of base/abstract requests is not supported.
+- Classes used in requests that are part of the parent namespace of that request should be included in global usings, e.g.:
+```xml
+<ItemGroup>
+  <Using Include="MyProject" />
+</ItemGroup>
+```
