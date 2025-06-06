@@ -6,7 +6,7 @@ namespace Sidio.Mediator.Validation.Tests;
 public sealed class ServiceCollectionExtensionsTests
 {
     [Fact]
-    public void AddMediatorValidation_WithoutAssemblyMarker_ThrowsArgumentNullException()
+    public void AddMediatorValidation_WithoutAssemblyMarker_ThrowsArgumentException()
     {
         // Arrange
         var services = new ServiceCollection();
@@ -15,7 +15,7 @@ public sealed class ServiceCollectionExtensionsTests
         var exception = Record.Exception(() => services.AddMediatorValidation(null!));
 
         // Assert
-        exception.Should().BeOfType<ArgumentNullException>();
+        exception.Should().BeOfType<ArgumentException>();
     }
 
     [Fact]
