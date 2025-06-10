@@ -38,6 +38,14 @@ services.AddMediator(typeof(MyRequest));
 // Get the request handler from the service provider
 var requestHander = serviceProvider.GetRequiredService<IRequestHandler<MyRequest, string>>();
 var result = await requestHander.HandleAsync(new MyRequest { Name = "World" });
+
+// or use dependency injection
+public class MyClass
+{
+    public MyClass(IRequestHandler<MyRequest, string> requestHandler)
+    {
+    }
+}
 ```
 
 ### Http requests
@@ -73,12 +81,12 @@ public class MyRequestValidator : AbstractValidator<MyRequest>
 }
 
 // Provide an arbitrary type to register all validators in the assembly of the type:
-services.AddMediatorValidation(typeof(MyRequest));
+services.AddMediator(typeof(MyRequest)).AddMediatorValidation(typeof(MyRequest));
 ```
 
 ## Source generators (v2.0+)
 In version 2.0 and later, Sidio.Mediator.SourceGenerator includes source generators that create an `IMediator` service implementation at 
-compile time.
+compile time. This service works both with the basic requests and request validation.
 The `IMediator` implementation contains a method for each request. For example, a request named `MyRequest`:
 ```csharp
 public class MyRequest : IRequest<string>;
@@ -93,16 +101,20 @@ Task<Result<string>> MyRequestAsync(MyRequest request, CancellationToken cancell
 - Register the `IMediator` service in your `Startup.cs` or `Program.cs`:
 
 ```csharp
-services.AddMediatorService();
+services
+    .AddMediator(typeof(MyRequest)) // register the request handlers
+    .AddMediatorValidation(typeof(MyRequest)) // register the request validators
+    .AddMediatorService(); // register the IMediator service
 ```
 
 ### Limitations
 - Requests should have a unique name across the project which implements the source generator.
 - Requests should not be nested in other classes.
-- Requests should always implement `IRequest`, `IRequest<T>` or `IHttpRequest<T>`. Inheritance of base/abstract requests is not supported.
+- Requests should always implement `IRequest`, `IRequest<T>` or `IHttpRequest<T>`. Inheritance of base/abstract requests is not supported. Inheritance of request handlers should work.
 - Types used in requests that are part of the parent namespace of that request should be included in global usings, e.g. in the csproj file:
 ```xml
 <ItemGroup>
   <Using Include="MyNamespace" />
 </ItemGroup>
 ```
+- The IMediator service will be located in namespace `Sidio.Mediator`.
