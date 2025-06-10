@@ -14,7 +14,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <Description>A simple implemenetation of the mediator pattern in .NET.</Description>
-        <PackageTags>mediator,mediator-pattern,request,requesthandler</PackageTags>
+        <PackageTags>mediator,mediator-pattern,request,requesthandler,cqrs</PackageTags>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Deterministic>true</Deterministic>

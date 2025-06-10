@@ -9,7 +9,7 @@ namespace Sidio.Mediator;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Adds the mediator services to the specified <see cref="IServiceCollection"/>.
+    /// Adds the request handlers to the specified <see cref="IServiceCollection"/>.
     /// This method scans the specified assemblies for classes that implement
     /// the <see cref="IRequestHandler{TRequest, TResponse}"/>, <see cref="IRequestHandler{TRequest}"/>,
     /// and <see cref="IHttpRequestHandler{TRequest, TResponse}"/> interfaces and registers
@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">The service collection.</param>
     /// <param name="assemblyTypes">The assembly types to scan.</param>
     /// <returns>The <see cref="IServiceCollection"/>.</returns>
-    public static IServiceCollection AddMediator(this IServiceCollection services, params Type[] assemblyTypes)
+    public static IServiceCollection AddMediatorCqrs(this IServiceCollection services, params Type[] assemblyTypes)
     {
         if (assemblyTypes == null || assemblyTypes.Length == 0)
         {

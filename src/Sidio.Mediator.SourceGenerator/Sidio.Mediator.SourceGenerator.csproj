@@ -20,7 +20,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <Description>A source generator for a centralized IMediator implementation.</Description>
-        <PackageTags>mediator,mediator-pattern,request,requesthandler,source-generator</PackageTags>
+        <PackageTags>mediator,mediator-pattern,request,requesthandler,source-generator,cqrs</PackageTags>
         <IncludeSymbols>false</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Deterministic>true</Deterministic>

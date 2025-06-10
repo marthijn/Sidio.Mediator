@@ -4,7 +4,7 @@ A simple implementation of the [mediator](https://en.wikipedia.org/wiki/Mediator
 [![build](https://github.com/marthijn/Sidio.Mediator/actions/workflows/build.yml/badge.svg)](https://github.com/marthijn/Sidio.Mediator/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/marthijn/Sidio.Mediator/badge.svg?branch=main)](https://coveralls.io/github/marthijn/Sidio.Mediator?branch=main)
 
-## Core package
+## Core package (CQRS abstractions)
 [![NuGet Version](https://img.shields.io/nuget/v/Sidio.Mediator)](https://www.nuget.org/packages/Sidio.Mediator/)
 
 ## Request validation package
@@ -33,7 +33,7 @@ public class MyRequestHandler : IRequestHandler<MyRequest, string>
 }
 
 // Provide an arbitrary type to register all request handlers in the assembly of the type:
-services.AddMediator(typeof(MyRequest));
+services.AddMediatorCqrs(typeof(MyRequest));
 
 // Get the request handler from the service provider
 var requestHander = serviceProvider.GetRequiredService<IRequestHandler<MyRequest, string>>();
@@ -85,7 +85,7 @@ services.AddMediator(typeof(MyRequest)).AddMediatorValidation(typeof(MyRequest))
 ```
 
 ## Source generators (v2.0+)
-In version 2.0 and later, Sidio.Mediator.SourceGenerator includes source generators that create an `IMediator` service implementation at 
+In version 2.0 and later, [Sidio.Mediator.SourceGenerator](https://www.nuget.org/packages/Sidio.Mediator.SourceGenerator/) includes source generators that create an `IMediator` service implementation at 
 compile time. This service works both with the basic requests and request validation.
 The `IMediator` implementation contains a method for each request. For example, a request named `MyRequest`:
 ```csharp

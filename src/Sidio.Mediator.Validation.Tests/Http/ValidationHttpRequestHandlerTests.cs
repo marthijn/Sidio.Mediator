@@ -13,7 +13,7 @@ public sealed class ValidationHttpRequestHandlerTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddMediator(typeof(IAssemblyMarker));
+        services.AddMediatorCqrs(typeof(IAssemblyMarker));
         services.AddMediatorValidation(typeof(IAssemblyMarker));
 
         var serviceProvider = services.BuildServiceProvider();
@@ -36,7 +36,7 @@ public sealed class ValidationHttpRequestHandlerTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddMediator(typeof(IAssemblyMarker));
+        services.AddMediatorCqrs(typeof(IAssemblyMarker));
         services.AddMediatorValidation(typeof(IAssemblyMarker));
 
         var serviceProvider = services.BuildServiceProvider();

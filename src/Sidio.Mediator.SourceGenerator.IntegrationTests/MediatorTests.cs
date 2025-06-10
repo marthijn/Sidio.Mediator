@@ -13,7 +13,7 @@ public sealed class MediatorTests
     {
         // Arrange
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddMediator(typeof(MediatorTests));
+        serviceCollection.AddMediatorCqrs(typeof(MediatorTests));
         serviceCollection.AddMediatorService();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -33,7 +33,7 @@ public sealed class MediatorTests
     {
         // Arrange
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddMediator(typeof(MediatorTests));
+        serviceCollection.AddMediatorCqrs(typeof(MediatorTests));
         serviceCollection.AddMediatorService();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -54,7 +54,7 @@ public sealed class MediatorTests
     {
         // Arrange
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddMediator(typeof(MediatorTests));
+        serviceCollection.AddMediatorCqrs(typeof(MediatorTests));
         serviceCollection.AddMediatorService();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -74,7 +74,7 @@ public sealed class MediatorTests
     {
         // Arrange
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddMediator(typeof(MediatorTests));
+        serviceCollection.AddMediatorCqrs(typeof(MediatorTests));
         serviceCollection.AddMediatorService();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -97,7 +97,7 @@ public sealed class MediatorTests
         // Arrange
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddLogging();
-        serviceCollection.AddMediator(typeof(MediatorTests)).AddMediatorValidation(typeof(MediatorTests));
+        serviceCollection.AddMediatorCqrs(typeof(MediatorTests)).AddMediatorValidation(typeof(MediatorTests));
         serviceCollection.AddMediatorService();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
