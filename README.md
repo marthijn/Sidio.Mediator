@@ -81,12 +81,14 @@ public class MyRequestValidator : AbstractValidator<MyRequest>
 }
 
 // Provide an arbitrary type to register all validators in the assembly of the type:
-services.AddMediator(typeof(MyRequest)).AddMediatorValidation(typeof(MyRequest));
+services
+    .AddMediatorCqrs(typeof(MyRequest))
+    .AddMediatorValidation(typeof(MyRequest));
 ```
 
 ## Source generators (v2.0+)
 In version 2.0 and later, [Sidio.Mediator.SourceGenerator](https://www.nuget.org/packages/Sidio.Mediator.SourceGenerator/) includes source generators that create an `IMediator` service implementation at 
-compile time. This service works both with the basic requests and request validation.
+compile time. This service works both with requests and request validation.
 The `IMediator` implementation contains a method for each request. For example, a request named `MyRequest`:
 ```csharp
 public class MyRequest : IRequest<string>;
@@ -102,7 +104,7 @@ Task<Result<string>> MyRequestAsync(MyRequest request, CancellationToken cancell
 
 ```csharp
 services
-    .AddMediator(typeof(MyRequest)) // register the request handlers
+    .AddMediatorCqrs(typeof(MyRequest)) // register the request handlers
     .AddMediatorValidation(typeof(MyRequest)) // register the request validators
     .AddMediatorService(); // register the IMediator service
 ```
