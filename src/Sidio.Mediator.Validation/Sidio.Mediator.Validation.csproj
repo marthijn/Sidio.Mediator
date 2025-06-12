@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;net8.0;net9.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>Latest</LangVersion>
@@ -14,7 +14,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <Description>Validation features for Sidio.Mediator.</Description>
-        <PackageTags>mediator,mediator-pattern,validation,request,requesthandler</PackageTags>
+        <PackageTags>mediator,mediator-pattern,validation,request,requesthandler,cqrs</PackageTags>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <Deterministic>true</Deterministic>
@@ -29,7 +29,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" Condition="'$(TargetFramework)' != 'netstandard2.0'" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.5" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
             <PrivateAssets>all</PrivateAssets>
