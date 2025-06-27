@@ -5,39 +5,39 @@ namespace Sidio.Mediator.Tests;
 public sealed class ServiceCollectionExtensionsTests
 {
     [Fact]
-    public void AddMediatorCqrs_WithoutAssemblyMarker_ThrowsArgumentException()
+    public void AddMediatorRequestHandlers_WithoutAssemblyMarker_ThrowsArgumentException()
     {
         // Arrange
         var services = new ServiceCollection();
 
         // Act
-        var exception = Record.Exception(() => services.AddMediatorCqrs());
+        var exception = Record.Exception(() => services.AddMediatorRequestHandlers());
 
         // Assert
         exception.Should().BeOfType<ArgumentException>();
     }
 
     [Fact]
-    public void AddMediatorCqrs_WithoutNullAssemblyMarker_ThrowsArgumentException()
+    public void AddMediatorRequestHandlers_WithoutNullAssemblyMarker_ThrowsArgumentException()
     {
         // Arrange
         var services = new ServiceCollection();
 
         // Act
-        var exception = Record.Exception(() => services.AddMediatorCqrs(null!));
+        var exception = Record.Exception(() => services.AddMediatorRequestHandlers(null!));
 
         // Assert
         exception.Should().BeOfType<ArgumentException>();
     }
 
     [Fact]
-    public void AddMediatorCqrs_WithAssemblyMarker_RequestHandlersRegistered()
+    public void AddMediatorRequestHandlers_WithAssemblyMarker_RequestHandlersRegistered()
     {
         // Arrange
         var services = new ServiceCollection();
 
         // Act
-        services.AddMediatorCqrs(typeof(TestRequestHandler));
+        services.AddMediatorRequestHandlers(typeof(TestRequestHandler));
 
         // Assert
         services.Count.Should().BeGreaterThan(0);

@@ -4,7 +4,7 @@ A simple implementation of the [mediator](https://en.wikipedia.org/wiki/Mediator
 [![build](https://github.com/marthijn/Sidio.Mediator/actions/workflows/build.yml/badge.svg)](https://github.com/marthijn/Sidio.Mediator/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/marthijn/Sidio.Mediator/badge.svg?branch=main)](https://coveralls.io/github/marthijn/Sidio.Mediator?branch=main)
 
-## Core package (CQRS abstractions)
+## Core package (request abstractions)
 [![NuGet Version](https://img.shields.io/nuget/v/Sidio.Mediator)](https://www.nuget.org/packages/Sidio.Mediator/)
 
 ## Request validation package
@@ -33,7 +33,7 @@ public class MyRequestHandler : IRequestHandler<MyRequest, string>
 }
 
 // Provide an arbitrary type to register all request handlers in the assembly of the type:
-services.AddMediatorCqrs(typeof(MyRequest));
+services.AddMediatorRequestHandlers(typeof(MyRequest));
 
 // Get the request handler from the service provider
 var requestHander = serviceProvider.GetRequiredService<IRequestHandler<MyRequest, string>>();
@@ -82,7 +82,7 @@ public class MyRequestValidator : AbstractValidator<MyRequest>
 
 // Provide an arbitrary type to register all validators in the assembly of the type:
 services
-    .AddMediatorCqrs(typeof(MyRequest))
+    .AddMediatorRequestHandlers(typeof(MyRequest))
     .AddMediatorValidation(typeof(MyRequest));
 ```
 
@@ -104,7 +104,7 @@ Task<Result<string>> MyRequestAsync(MyRequest request, CancellationToken cancell
 
 ```csharp
 services
-    .AddMediatorCqrs(typeof(MyRequest)) // register the request handlers
+    .AddMediatorRequestHandlers(typeof(MyRequest)) // register the request handlers
     .AddMediatorValidation(typeof(MyRequest)) // register the request validators
     .AddMediatorService(); // register the IMediator service
 ```

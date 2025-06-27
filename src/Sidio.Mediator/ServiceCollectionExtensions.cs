@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">The service collection.</param>
     /// <param name="assemblyTypes">The assembly types to scan.</param>
     /// <returns>The <see cref="IServiceCollection"/>.</returns>
-    public static IServiceCollection AddMediatorCqrs(this IServiceCollection services, params Type[] assemblyTypes)
+    public static IServiceCollection AddMediatorRequestHandlers(this IServiceCollection services, params Type[] assemblyTypes)
     {
         if (assemblyTypes == null || assemblyTypes.Length == 0)
         {
