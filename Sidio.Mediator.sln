@@ -26,6 +26,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{
 		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidio.Mediator.SourceGenerator", "src\Sidio.Mediator.SourceGenerator\Sidio.Mediator.SourceGenerator.csproj", "{1D70EAC0-308C-418F-98A2-36316D4212AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidio.Mediator.SourceGenerator.Tests", "src\Sidio.Mediator.SourceGenerator.Tests\Sidio.Mediator.SourceGenerator.Tests.csproj", "{7A68D13D-31CC-4E6F-A096-39EE0333560B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidio.Mediator.SourceGenerator.IntegrationTests", "src\Sidio.Mediator.SourceGenerator.IntegrationTests\Sidio.Mediator.SourceGenerator.IntegrationTests.csproj", "{C9287058-CF00-4915-B45A-895285DB999B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,11 +54,26 @@ Global
 		{C8F42A1E-625B-4D1F-933D-7861F78A10F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8F42A1E-625B-4D1F-933D-7861F78A10F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8F42A1E-625B-4D1F-933D-7861F78A10F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D70EAC0-308C-418F-98A2-36316D4212AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D70EAC0-308C-418F-98A2-36316D4212AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D70EAC0-308C-418F-98A2-36316D4212AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D70EAC0-308C-418F-98A2-36316D4212AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A68D13D-31CC-4E6F-A096-39EE0333560B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A68D13D-31CC-4E6F-A096-39EE0333560B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A68D13D-31CC-4E6F-A096-39EE0333560B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A68D13D-31CC-4E6F-A096-39EE0333560B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9287058-CF00-4915-B45A-895285DB999B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9287058-CF00-4915-B45A-895285DB999B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9287058-CF00-4915-B45A-895285DB999B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9287058-CF00-4915-B45A-895285DB999B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{804B6971-C106-42E2-95D9-F5207FCA19E1} = {022FBE39-9BB7-44A4-B581-F3442761036D}
 		{4710364D-24DB-4614-9DC9-0C8A5F0070AE} = {0ABAFD30-B844-4B84-B425-5140B858133C}
 		{0499F4A2-84E7-4F29-B41D-656A0BC4F69B} = {022FBE39-9BB7-44A4-B581-F3442761036D}
 		{C8F42A1E-625B-4D1F-933D-7861F78A10F2} = {0ABAFD30-B844-4B84-B425-5140B858133C}
+		{1D70EAC0-308C-418F-98A2-36316D4212AD} = {022FBE39-9BB7-44A4-B581-F3442761036D}
+		{7A68D13D-31CC-4E6F-A096-39EE0333560B} = {0ABAFD30-B844-4B84-B425-5140B858133C}
+		{C9287058-CF00-4915-B45A-895285DB999B} = {0ABAFD30-B844-4B84-B425-5140B858133C}
 	EndGlobalSection
 EndGlobal
