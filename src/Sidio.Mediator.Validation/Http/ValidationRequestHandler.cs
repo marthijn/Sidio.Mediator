@@ -40,7 +40,7 @@ internal sealed class ValidationHttpRequestHandler<TRequest, TResponse> : Valida
 
     private async Task<HttpResult<TResponse>> HandleInternalAsync(TRequest request, CancellationToken cancellationToken = default)
     {
-        var validationFailures = await ValidateRequestAsync(request, cancellationToken);
+        var validationFailures = await ValidateRequestAsync(request, cancellationToken).ConfigureAwait(false);
         if (validationFailures.Count > 0)
         {
             if (_logger.IsEnabled(LogLevel.Trace))
@@ -62,6 +62,6 @@ internal sealed class ValidationHttpRequestHandler<TRequest, TResponse> : Valida
                 typeof(TRequest).Name);
         }
 
-        return await _innerHandler.HandleAsync(request, cancellationToken);
+        return await _innerHandler.HandleAsync(request, cancellationToken).ConfigureAwait(false);
     }
 }

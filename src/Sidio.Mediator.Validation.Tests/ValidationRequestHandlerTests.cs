@@ -11,7 +11,7 @@ public sealed class ValidationRequestHandlerTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddMediator(typeof(IAssemblyMarker));
+        services.AddMediatorRequestHandlers(typeof(IAssemblyMarker));
         services.AddMediatorValidation(typeof(IAssemblyMarker));
 
         var serviceProvider = services.BuildServiceProvider();
@@ -33,7 +33,7 @@ public sealed class ValidationRequestHandlerTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddMediator(typeof(IAssemblyMarker));
+        services.AddMediatorRequestHandlers(typeof(IAssemblyMarker));
         services.AddMediatorValidation(typeof(IAssemblyMarker));
 
         var serviceProvider = services.BuildServiceProvider();
@@ -58,7 +58,7 @@ public sealed class ValidationRequestHandlerTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddMediator(typeof(IAssemblyMarker));
+        services.AddMediatorRequestHandlers(typeof(IAssemblyMarker));
         services.AddMediatorValidation(typeof(IAssemblyMarker));
 
         var serviceProvider = services.BuildServiceProvider();
@@ -76,7 +76,7 @@ public sealed class ValidationRequestHandlerTests
 
     public sealed class TestRequest : IRequest
     {
-        public string? Name { get; init; }
+        public string? Name { get; set; }
     }
 
     public sealed class TestRequestHandler : IRequestHandler<TestRequest>
@@ -97,7 +97,7 @@ public sealed class ValidationRequestHandlerTests
 
     public sealed class TestRequest2 : IRequest
     {
-        public string? Name { get; init; }
+        public string? Name { get; set; }
     }
 
     public sealed class TestRequestHandler2 : IRequestHandler<TestRequest2>
