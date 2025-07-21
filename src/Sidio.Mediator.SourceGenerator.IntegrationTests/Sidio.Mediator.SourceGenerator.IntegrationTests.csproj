@@ -17,7 +17,7 @@
         </PackageReference>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
         <PackageReference Include="xunit" Version="2.9.3" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="3.1.2">
+        <PackageReference Include="xunit.runner.visualstudio" Version="3.1.3">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -26,12 +26,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Xunit"/>
+        <Using Include="Xunit" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Sidio.Mediator.SourceGenerator\Sidio.Mediator.SourceGenerator.csproj"
-                        OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+      <ProjectReference Include="..\Sidio.Mediator.SourceGenerator\Sidio.Mediator.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
       <ProjectReference Include="..\Sidio.Mediator.Validation\Sidio.Mediator.Validation.csproj" />
     </ItemGroup>
 
