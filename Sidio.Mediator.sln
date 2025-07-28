@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{
 		.github\dependabot.yml = .github\dependabot.yml
 		.github\workflows\build.yml = .github\workflows\build.yml
 		.github\workflows\release.yml = .github\workflows\release.yml
+		.github\workflows\dependabot-autoapprove.yml = .github\workflows\dependabot-autoapprove.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidio.Mediator.SourceGenerator", "src\Sidio.Mediator.SourceGenerator\Sidio.Mediator.SourceGenerator.csproj", "{1D70EAC0-308C-418F-98A2-36316D4212AD}"
