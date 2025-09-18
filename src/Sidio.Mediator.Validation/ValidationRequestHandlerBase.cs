@@ -30,7 +30,7 @@ internal abstract class ValidationRequestHandlerBase<TRequest>
         var context = new ValidationContext<TRequest>(request);
 
         var validationResults = await Task.WhenAll(
-            _validators.Select(validator => validator.ValidateAsync(context, cancellationToken)));
+            _validators.Select(validator => validator.ValidateAsync(context, cancellationToken))).ConfigureAwait(false);
 
         return validationResults
             .Where(validationResult => !validationResult.IsValid)
