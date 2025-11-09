@@ -1,0 +1,24 @@
+<Solution>
+  <Folder Name="/SolutionItems/">
+    <File Path=".gitignore" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Src/">
+    <Project Path="src/Sidio.Mediator.SourceGenerator/Sidio.Mediator.SourceGenerator.csproj" />
+    <Project Path="src/Sidio.Mediator.Validation/Sidio.Mediator.Validation.csproj" />
+    <Project Path="src/Sidio.Mediator/Sidio.Mediator.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="src/Sidio.Mediator.SourceGenerator.IntegrationTests/Sidio.Mediator.SourceGenerator.IntegrationTests.csproj" />
+    <Project Path="src/Sidio.Mediator.SourceGenerator.Tests/Sidio.Mediator.SourceGenerator.Tests.csproj" />
+    <Project Path="src/Sidio.Mediator.Tests/Sidio.Mediator.Tests.csproj" />
+    <Project Path="src/Sidio.Mediator.Validation.Tests/Sidio.Mediator.Validation.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Workflows/">
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/dependabot-autoapprove.yml" />
+    <File Path=".github/workflows/release.yml" />
+  </Folder>
+</Solution>
