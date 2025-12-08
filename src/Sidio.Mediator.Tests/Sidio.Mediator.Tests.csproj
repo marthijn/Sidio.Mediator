@@ -30,7 +30,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="TngTech.ArchUnitNET.xUnit" Version="0.12.3" />
+        <PackageReference Include="TngTech.ArchUnitNET.xUnit" Version="0.13.0" />
     </ItemGroup>
 
     <ItemGroup>
