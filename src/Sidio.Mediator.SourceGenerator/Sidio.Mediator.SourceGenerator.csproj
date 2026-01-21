@@ -14,7 +14,7 @@
 
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
         <Authors>Marthijn van den Heuvel,Sidio</Authors>
-        <Copyright>Copyright (c) 2025 Marthijn van den Heuvel</Copyright>
+        <Copyright>Copyright (c) 2025-2026 Marthijn van den Heuvel</Copyright>
         <PackageId>Sidio.Mediator.SourceGenerator</PackageId>
         <RepositoryType>git</RepositoryType>
         <PackageReadmeFile>README.md</PackageReadmeFile>
