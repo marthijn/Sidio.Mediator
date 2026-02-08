@@ -6,23 +6,19 @@
 
 namespace Sidio.Mediator
 {
-    using System;
-    using System.Threading.Tasks;
-    using Microsoft.Extensions.DependencyInjection;
-
     public partial interface IMediator
     {
     }
 
     public partial class Mediator : IMediator
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly global::System.IServiceProvider _serviceProvider;
 
-        public Mediator(IServiceProvider serviceProvider)
+        public Mediator(global::System.IServiceProvider serviceProvider)
         {
             if (serviceProvider == null)
             {
-                throw new ArgumentNullException(nameof(serviceProvider));
+                throw new global::System.ArgumentNullException(nameof(serviceProvider));
             }
 
             _serviceProvider = serviceProvider;
@@ -31,14 +27,14 @@ namespace Sidio.Mediator
 
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddMediatorService(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        public static global::Microsoft.Extensions.DependencyInjection.IServiceCollection AddMediatorService(this global::Microsoft.Extensions.DependencyInjection.IServiceCollection services, global::Microsoft.Extensions.DependencyInjection.ServiceLifetime lifetime = global::Microsoft.Extensions.DependencyInjection.ServiceLifetime.Scoped)
         {
             if (services == null)
             {
-                throw new ArgumentNullException(nameof(services));
+                throw new global::System.ArgumentNullException(nameof(services));
             }
 
-            var serviceDescriptor = new ServiceDescriptor(typeof(IMediator), typeof(Mediator), lifetime);
+            var serviceDescriptor = new global::Microsoft.Extensions.DependencyInjection.ServiceDescriptor(typeof(IMediator), typeof(Mediator), lifetime);
             services.Add(serviceDescriptor);
             return services;
         }

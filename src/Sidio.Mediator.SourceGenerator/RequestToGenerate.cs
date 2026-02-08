@@ -55,7 +55,7 @@ internal readonly record struct RequestToGenerate
                 className,
                 requestInterface,
                 namespaceName,
-                $"IRequestHandler<{className}, {genericReturnType}>",
+                $"global::Sidio.Mediator.IRequestHandler<{className}, {genericReturnType}>",
                 usings,
                 genericReturnType);
         }
@@ -66,7 +66,7 @@ internal readonly record struct RequestToGenerate
                 className,
                 requestInterface,
                 namespaceName,
-                $"IHttpRequestHandler<{className}, {genericReturnType}>",
+                $"global::Sidio.Mediator.Http.IHttpRequestHandler<{className}, {genericReturnType}>",
                 usings,
                 genericReturnType);
         }
@@ -77,7 +77,7 @@ internal readonly record struct RequestToGenerate
                 className,
                 requestInterface,
                 namespaceName,
-                $"IRequestHandler<{className}>",
+                $"global::Sidio.Mediator.IRequestHandler<{className}>",
                 usings);
         }
 

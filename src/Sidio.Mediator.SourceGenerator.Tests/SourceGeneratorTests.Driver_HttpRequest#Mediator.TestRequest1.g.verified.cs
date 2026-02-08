@@ -6,23 +6,20 @@
 
 namespace Sidio.Mediator
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Extensions.DependencyInjection;
     using Sidio.Mediator.Http;
     using GlobalUsing;
     using Sidio.Mediator.SourceGenerator.Tests;
 
     public partial interface IMediator
     {
-        Task<HttpResult<IReadonlyList<string>>> TestRequest1Async(TestRequest1 request, CancellationToken cancellationToken = default);
+        global::System.Threading.Tasks.Task<global::Sidio.Mediator.Http.HttpResult<IReadonlyList<string>>> TestRequest1Async(TestRequest1 request, global::System.Threading.CancellationToken cancellationToken = default);
     }
 
     public partial class Mediator
     {
-        public Task<HttpResult<IReadonlyList<string>>> TestRequest1Async(TestRequest1 request, CancellationToken cancellationToken = default)
+        public global::System.Threading.Tasks.Task<global::Sidio.Mediator.Http.HttpResult<IReadonlyList<string>>> TestRequest1Async(TestRequest1 request, global::System.Threading.CancellationToken cancellationToken = default)
         {
-            var requestHandler = _serviceProvider.GetRequiredService<IHttpRequestHandler<TestRequest1, IReadonlyList<string>>>();
+            var requestHandler = global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::Sidio.Mediator.Http.IHttpRequestHandler<TestRequest1, IReadonlyList<string>>>(_serviceProvider);
             return requestHandler.HandleAsync(request, cancellationToken);
         }
     }

@@ -15,23 +15,19 @@ internal static class SourceGenerationHelper
     public const string MediatorPartialClassSource = ClassHeader + @"
 namespace Sidio.Mediator
 {
-    using System;
-    using System.Threading.Tasks;
-    using Microsoft.Extensions.DependencyInjection;
-
     public partial interface IMediator
     {
     }
 
     public partial class Mediator : IMediator
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly global::System.IServiceProvider _serviceProvider;
 
-        public Mediator(IServiceProvider serviceProvider)
+        public Mediator(global::System.IServiceProvider serviceProvider)
         {
             if (serviceProvider == null)
             {
-                throw new ArgumentNullException(nameof(serviceProvider));
+                throw new global::System.ArgumentNullException(nameof(serviceProvider));
             }
 
             _serviceProvider = serviceProvider;
@@ -43,14 +39,14 @@ namespace Sidio.Mediator
         /// <summary>
         /// Adds the <see cref=""IMediator""/> service to the <see cref=""IServiceCollection""/>.
         /// </summary>
-        public static IServiceCollection AddMediatorService(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        public static global::Microsoft.Extensions.DependencyInjection.IServiceCollection AddMediatorService(this global::Microsoft.Extensions.DependencyInjection.IServiceCollection services, global::Microsoft.Extensions.DependencyInjection.ServiceLifetime lifetime = global::Microsoft.Extensions.DependencyInjection.ServiceLifetime.Scoped)
         {
             if (services == null)
             {
-                throw new ArgumentNullException(nameof(services));
+                throw new global::System.ArgumentNullException(nameof(services));
             }
 
-            var serviceDescriptor = new ServiceDescriptor(typeof(IMediator), typeof(Mediator), lifetime);
+            var serviceDescriptor = new global::Microsoft.Extensions.DependencyInjection.ServiceDescriptor(typeof(IMediator), typeof(Mediator), lifetime);
             services.Add(serviceDescriptor);
             return services;
         }
@@ -59,21 +55,10 @@ namespace Sidio.Mediator
     
     public static string GenerateClass(RequestToGenerate requestToGenerate)
     {
-        var usings = new HashSet<string>
-        {
-            "System.Threading",
-            "System.Threading.Tasks",
-            "Microsoft.Extensions.DependencyInjection"
-        };
-
+        var usings = new HashSet<string>();
         foreach(var u in requestToGenerate.Usings)
         {
             usings.Add(u);
-        }
-
-        if (requestToGenerate.IsHttpRequest)
-        {
-            usings.Add("Sidio.Mediator.Http");
         }
 
         if (!string.IsNullOrWhiteSpace(requestToGenerate.NamespaceName))
@@ -81,7 +66,7 @@ namespace Sidio.Mediator
             usings.Add(requestToGenerate.NamespaceName);
         }
 
-        var httpPrefix = requestToGenerate.IsHttpRequest ? "Http" : string.Empty;
+        var httpPrefix = requestToGenerate.IsHttpRequest ? "Http.Http" : string.Empty;
 
         var sb = new StringBuilder();
         sb.AppendLine(ClassHeader);
@@ -98,11 +83,11 @@ namespace Sidio.Mediator
         sb.AppendLine($"{Spacing}{{");
         if (requestToGenerate.ReturnType is not null)
         {
-            sb.AppendLine($"{Spacing}{Spacing}Task<{httpPrefix}Result<{requestToGenerate.ReturnType}>> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, CancellationToken cancellationToken = default);");
+            sb.AppendLine($"{Spacing}{Spacing}global::System.Threading.Tasks.Task<global::Sidio.Mediator.{httpPrefix}Result<{requestToGenerate.ReturnType}>> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, global::System.Threading.CancellationToken cancellationToken = default);");
         }
         else
         {
-            sb.AppendLine($"{Spacing}{Spacing}Task<Result> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, CancellationToken cancellationToken = default);");
+            sb.AppendLine($"{Spacing}{Spacing}global::System.Threading.Tasks.Task<global::Sidio.Mediator.Result> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, global::System.Threading.CancellationToken cancellationToken = default);");
         }
 
         sb.AppendLine($"{Spacing}}}\n"); // interface IMediator
@@ -113,16 +98,16 @@ namespace Sidio.Mediator
 
         if (requestToGenerate.ReturnType is not null)
         {
-            sb.AppendLine($"{Spacing}{Spacing}public Task<{httpPrefix}Result<{requestToGenerate.ReturnType}>> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, CancellationToken cancellationToken = default)");
+            sb.AppendLine($"{Spacing}{Spacing}public global::System.Threading.Tasks.Task<global::Sidio.Mediator.{httpPrefix}Result<{requestToGenerate.ReturnType}>> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, global::System.Threading.CancellationToken cancellationToken = default)");
         }
         else
         {
-            sb.AppendLine($"{Spacing}{Spacing}public Task<Result> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, CancellationToken cancellationToken = default)");
+            sb.AppendLine($"{Spacing}{Spacing}public global::System.Threading.Tasks.Task<global::Sidio.Mediator.Result> {requestToGenerate.ClassName}Async({requestToGenerate.ClassName} request, global::System.Threading.CancellationToken cancellationToken = default)");
         }
 
         sb.AppendLine($"{Spacing}{Spacing}{{");
 
-        sb.AppendLine($"{Spacing}{Spacing}{Spacing}var requestHandler = _serviceProvider.GetRequiredService<{requestToGenerate.RequestHandlerInterface}>();");
+        sb.AppendLine($"{Spacing}{Spacing}{Spacing}var requestHandler = global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<{requestToGenerate.RequestHandlerInterface}>(_serviceProvider);");
         sb.AppendLine($"{Spacing}{Spacing}{Spacing}return requestHandler.HandleAsync(request, cancellationToken);");
 
         sb.AppendLine($"{Spacing}{Spacing}}}"); // function
