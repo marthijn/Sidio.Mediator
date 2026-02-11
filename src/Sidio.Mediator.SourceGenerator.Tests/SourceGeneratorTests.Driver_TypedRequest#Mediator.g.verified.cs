@@ -6,10 +6,13 @@
 
 namespace Sidio.Mediator
 {
+    [global::System.CodeDom.Compiler.GeneratedCode("Sidio.Mediator.SourceGenerator", "1.0.0")]
     public partial interface IMediator
     {
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCode("Sidio.Mediator.SourceGenerator", "1.0.0")]
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public partial class Mediator : IMediator
     {
         private readonly global::System.IServiceProvider _serviceProvider;
@@ -25,6 +28,8 @@ namespace Sidio.Mediator
         }
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCode("Sidio.Mediator.SourceGenerator", "1.0.0")]
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtensions
     {
         public static global::Microsoft.Extensions.DependencyInjection.IServiceCollection AddMediatorService(this global::Microsoft.Extensions.DependencyInjection.IServiceCollection services, global::Microsoft.Extensions.DependencyInjection.ServiceLifetime lifetime = global::Microsoft.Extensions.DependencyInjection.ServiceLifetime.Scoped)
