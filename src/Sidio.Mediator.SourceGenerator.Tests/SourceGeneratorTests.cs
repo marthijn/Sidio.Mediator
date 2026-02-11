@@ -15,7 +15,9 @@ public class SourceGeneratorTests
         _ = driver.GetRunResult().Results.Single();
 
         // Assert
-        return Verify(driver).ScrubLinesContaining("///");
+        return Verify(driver)
+            .ScrubLinesContaining("///")
+            .ScrubLinesWithReplace((x) => x.Contains("System.CodeDom.Compiler.GeneratedCode") ? "    [global::System.CodeDom.Compiler.GeneratedCode(\"Sidio.Mediator.SourceGenerator\", \"1.0.0\")]" : x);
     }
 
     [Fact]
@@ -28,7 +30,9 @@ public class SourceGeneratorTests
         _ = driver.GetRunResult().Results.Single();
 
         // Assert
-        return Verify(driver).ScrubLinesContaining("///");
+        return Verify(driver)
+            .ScrubLinesContaining("///")
+            .ScrubLinesWithReplace((x) => x.Contains("System.CodeDom.Compiler.GeneratedCode") ? "    [global::System.CodeDom.Compiler.GeneratedCode(\"Sidio.Mediator.SourceGenerator\", \"1.0.0\")]" : x);
     }
 
     [Fact]
@@ -41,7 +45,9 @@ public class SourceGeneratorTests
         _ = driver.GetRunResult().Results.Single();
 
         // Assert
-        return Verify(driver).ScrubLinesContaining("///");
+        return Verify(driver)
+            .ScrubLinesContaining("///")
+            .ScrubLinesWithReplace((x) => x.Contains("System.CodeDom.Compiler.GeneratedCode") ? "    [global::System.CodeDom.Compiler.GeneratedCode(\"Sidio.Mediator.SourceGenerator\", \"1.0.0\")]" : x);
     }
 
     private static GeneratorDriver BuildDriver(string sourceCode)
